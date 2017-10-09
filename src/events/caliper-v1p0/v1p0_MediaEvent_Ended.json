@@ -1,0 +1,95 @@
+{
+  "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+  "@type": "http://purl.imsglobal.org/caliper/v1/MediaEvent",
+  "actor": {
+    "@id": "https://leccap.engin.umich.edu/person/psenka",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/lis/Person",
+    "name": "Sean Psenka",
+    "description": null,
+    "extensions": {
+    },
+    "dateCreated": null,
+    "dateModified": null
+  },
+  "action": "http://purl.imsglobal.org/vocab/caliper/v1/action#Ended",
+  "object": {
+    "@id": "https://leccap.engin.umich.edu/leccap/viewer/r/ftmY7G",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/MediaLocation",
+    "name": null,
+    "description": "\"currentTime\" in milliseconds. See \"extensions.currentTimeSeconds\" for original time (in seconds)",
+    "extensions": {
+      "currentTimeSeconds": "2986.017"
+    },
+    "dateCreated": null,
+    "dateModified": null,
+    "objectType": [
+    ],
+    "alignedLearningObjective": [
+    ],
+    "keywords": [
+    ],
+    "isPartOf": {
+      "@id": "https://leccap.engin.umich.edu/leccap/viewer/r/ftmY7G",
+      "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+      "@type": "http://purl.imsglobal.org/caliper/v1/VideoObject",
+      "name": "Lecture recorded on 9/27/2017",
+      "description": null,
+      "extensions": {
+      },
+      "dateCreated": "2017-09-27T14:08:00.000Z",
+      "dateModified": "2017-10-02T14:48:30.000Z",
+      "objectType": [
+      ],
+      "alignedLearningObjective": [
+      ],
+      "keywords": [
+      ],
+      "isPartOf": {
+        "@id": "https://leccap.engin.umich.edu/leccap/site/6cbf6ghw4021r2k0dgz",
+        "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+        "@type": "http://purl.imsglobal.org/caliper/v1/WebPage",
+        "name": "BIOLOGY 172 003 / BIOLOGY 172 004",
+        "description": "",
+        "extensions": {
+        },
+        "dateCreated": "2017-09-01T21:47:18.000Z",
+        "dateModified": null,
+        "objectType": [
+        ],
+        "alignedLearningObjective": [
+        ],
+        "keywords": [
+        ],
+        "isPartOf": null,
+        "datePublished": null,
+        "version": null
+      },
+      "datePublished": null,
+      "version": null,
+      "duration": 3298
+    },
+    "datePublished": null,
+    "version": null,
+    "currentTime": 2986017
+  },
+  "target": null,
+  "generated": null,
+  "eventTime": "2017-10-02T14:48:30.000Z",
+  "edApp": {
+    "@id": "https://leccap.engin.umich.edu/application/Lecture+Capture",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/SoftwareApplication",
+    "name": "Lecture Capture",
+    "description": null,
+    "extensions": {
+    },
+    "dateCreated": null,
+    "dateModified": null
+  },
+  "group": null,
+  "membership": null,
+  "federatedSession": null,
+  "openlrsSourceId": "78f354e8-2d49-42fc-926b-22302dea384c"
+}
