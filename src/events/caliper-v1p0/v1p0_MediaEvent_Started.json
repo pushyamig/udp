@@ -1,0 +1,125 @@
+{
+  "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+  "@type": "http://purl.imsglobal.org/caliper/v1/MediaEvent",
+  "actor": {
+    "@id": "https://leccap.engin.umich.edu/person/dlench",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/lis/Person",
+    "name": "Daniel Lenchner",
+    "description": null,
+    "extensions": {
+    },
+    "dateCreated": null,
+    "dateModified": null
+  },
+  "action": "http://purl.imsglobal.org/vocab/caliper/v1/action#Started",
+  "object": {
+    "@id": "https://leccap.engin.umich.edu/leccap/viewer/r/DOUPtp",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/MediaLocation",
+    "name": null,
+    "description": "\"currentTime\" in milliseconds. See \"extensions.currentTimeSeconds\" for original time (in seconds)",
+    "extensions": {
+      "currentTimeSeconds": "0.000"
+    },
+    "dateCreated": null,
+    "dateModified": null,
+    "objectType": [
+    ],
+    "alignedLearningObjective": [
+    ],
+    "keywords": [
+    ],
+    "isPartOf": {
+      "@id": "https://leccap.engin.umich.edu/leccap/viewer/r/DOUPtp",
+      "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+      "@type": "http://purl.imsglobal.org/caliper/v1/VideoObject",
+      "name": "Lecture recorded on 9/26/2017",
+      "description": null,
+      "extensions": {
+      },
+      "dateCreated": "2017-09-26T17:08:04.000Z",
+      "dateModified": "2017-10-01T21:29:03.000Z",
+      "objectType": [
+      ],
+      "alignedLearningObjective": [
+      ],
+      "keywords": [
+      ],
+      "isPartOf": {
+        "@id": "https://leccap.engin.umich.edu/leccap/site/iosb1eezb220x49khge",
+        "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+        "@type": "http://purl.imsglobal.org/caliper/v1/WebPage",
+        "name": "BIOLOGY 305 001",
+        "description": "",
+        "extensions": {
+        },
+        "dateCreated": "2017-08-31T15:10:10.000Z",
+        "dateModified": null,
+        "objectType": [
+        ],
+        "alignedLearningObjective": [
+        ],
+        "keywords": [
+        ],
+        "isPartOf": null,
+        "datePublished": null,
+        "version": null
+      },
+      "datePublished": null,
+      "version": null,
+      "duration": 5098
+    },
+    "datePublished": null,
+    "version": null,
+    "currentTime": 0
+  },
+  "target": null,
+  "generated": null,
+  "eventTime": "2017-10-01T21:29:03.000Z",
+  "edApp": {
+    "@id": "https://leccap.engin.umich.edu/application/Lecture+Capture",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/SoftwareApplication",
+    "name": "Lecture Capture",
+    "description": null,
+    "extensions": {
+    },
+    "dateCreated": null,
+    "dateModified": null
+  },
+  "group": {
+    "@id": "_:ctools.umich.edu%3Ab2640c9071b9ded4285c004c7c445682aca60ed4#group",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/lis/CourseSection",
+    "name": "BIOLOGY 305 001 FA 2017",
+    "description": null,
+    "extensions": {
+    },
+    "dateCreated": null,
+    "dateModified": null,
+    "courseNumber": "BIOLOGY 305 001 FA 2017",
+    "academicSession": null,
+    "subOrganizationOf": null,
+    "category": null
+  },
+  "membership": {
+    "@id": "_:ctools.umich.edu%3Ab2640c9071b9ded4285c004c7c445682aca60ed4#membership",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/lis/Membership",
+    "name": null,
+    "description": null,
+    "extensions": {
+    },
+    "dateCreated": null,
+    "dateModified": null,
+    "member": "https://leccap.engin.umich.edu/person/dlench",
+    "organization": "_:ctools.umich.edu%3Ab2640c9071b9ded4285c004c7c445682aca60ed4#group",
+    "roles": [
+      "http://purl.imsglobal.org/vocab/lis/v2/membership#Learner"
+    ],
+    "status": "http://purl.imsglobal.org/vocab/lis/v2/status#Active"
+  },
+  "federatedSession": null,
+  "openlrsSourceId": "6001630e-2f01-48b9-abcb-fea57a762a45"
+}
