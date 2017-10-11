@@ -31,10 +31,6 @@
         "dateCreated": "2017-10-01T19:08:04.000Z",
         "dateModified": "2017-10-01T21:29:03.000Z",
         "currentTime": "PT2905.156S",
-        "description": "\"currentTime\" in milliseconds. See \"extensions.currentTimeSeconds\" for original time (in seconds)",
-        "extensions": {
-          "currentTimeSeconds": "2905.156"
-        },
         "isPartOf": {
           "id": "https://leccap.engin.umich.edu/leccap/viewer/r/FeLqjA",
           "type": "VideoObject"

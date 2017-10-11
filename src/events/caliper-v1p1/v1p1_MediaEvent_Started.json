@@ -31,10 +31,6 @@
         "id": "https://leccap.engin.umich.edu/leccap/viewer/r/DOUPtp",
         "type": "MediaLocation",
         "currentTime": "PT0.000S",
-        "description": "\"currentTime\" in milliseconds. See \"extensions.currentTimeSeconds\" for original time (in seconds)",
-        "extensions": {
-          "currentTimeSeconds": "0.000"
-        },
         "isPartOf": {
           "id": "https://leccap.engin.umich.edu/leccap/viewer/r/DOUPtp",
           "type": "VideoObject"

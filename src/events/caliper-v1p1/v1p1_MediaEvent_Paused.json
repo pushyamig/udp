@@ -31,10 +31,6 @@
         "id": "https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8",
         "type": "MediaLocation",
         "currentTime": "PT4540.137S",
-        "description": "\"currentTime\" in milliseconds. See \"extensions.currentTimeSeconds\" for original time (in seconds)",
-        "extensions": {
-          "currentTimeSeconds": "4540.137"
-        },
         "isPartOf": {
           "id": "https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8",
           "type": "VideoObject"
