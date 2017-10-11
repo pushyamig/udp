@@ -56,4 +56,3 @@ Caliper event to the minimum requires `actor`,`action`,`Object`. A simple defini
 8. For Session event, gives information about session the user belongs to and is Captured by the `session` object.
  
  
-
