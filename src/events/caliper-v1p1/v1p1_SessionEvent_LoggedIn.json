@@ -45,7 +45,9 @@
         "type": "Membership",
         "member": "https://leccap.engin.umich.edu/users/culmccor",
         "organization": "_:ctools.umich.edu%3A9a17100e4c806512a4a34b20d61dd8786d2c9826#group",
-        "roles": ["Learner"],
+        "roles": [
+          "Learner"
+        ],
         "status": "Active"
       }
     }

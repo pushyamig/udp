@@ -105,4 +105,98 @@
   "membership":null,
   "federatedSession":null,
   "openlrsSourceId":"86de25e8-450e-419a-968f-b650e0fa9812"
+=======
+  "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+  "@type": "http://purl.imsglobal.org/caliper/v1/MediaEvent",
+  "actor": {
+    "@id": "https://leccap.engin.umich.edu/person/naufalza",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/lis/Person",
+    "name": "Muhammad Naufal Mohd Zani",
+    "description": null,
+    "extensions": {
+    },
+    "dateCreated": null,
+    "dateModified": null
+  },
+  "action": "http://purl.imsglobal.org/vocab/caliper/v1/action#Paused",
+  "object": {
+    "@id": "https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/MediaLocation",
+    "name": null,
+    "description": "\"currentTime\" in milliseconds. See \"extensions.currentTimeSeconds\" for original time (in seconds)",
+    "extensions": {
+      "currentTimeSeconds": "4540.137"
+    },
+    "dateCreated": null,
+    "dateModified": null,
+    "objectType": [
+    ],
+    "alignedLearningObjective": [
+    ],
+    "keywords": [
+    ],
+    "isPartOf": {
+      "@id": "https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8",
+      "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+      "@type": "http://purl.imsglobal.org/caliper/v1/VideoObject",
+      "name": "Lecture recorded on 9/19/2017",
+      "description": null,
+      "extensions": {
+      },
+      "dateCreated": "2017-09-19T16:08:02.000Z",
+      "dateModified": "2017-10-01T21:28:59.000Z",
+      "objectType": [
+      ],
+      "alignedLearningObjective": [
+      ],
+      "keywords": [
+      ],
+      "isPartOf": {
+        "@id": "https://leccap.engin.umich.edu/leccap/site/ziiq5uzrd9k06e6vjew",
+        "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+        "@type": "http://purl.imsglobal.org/caliper/v1/WebPage",
+        "name": "EECS 370 001 / 002 / 003 / 004",
+        "description": "",
+        "extensions": {
+        },
+        "dateCreated": "2017-09-05T06:41:17.000Z",
+        "dateModified": null,
+        "objectType": [
+        ],
+        "alignedLearningObjective": [
+        ],
+        "keywords": [
+        ],
+        "isPartOf": null,
+        "datePublished": null,
+        "version": null
+      },
+      "datePublished": null,
+      "version": null,
+      "duration": 5099
+    },
+    "datePublished": null,
+    "version": null,
+    "currentTime": 4540137
+  },
+  "target": null,
+  "generated": null,
+  "eventTime": "2017-10-01T21:28:59.000Z",
+  "edApp": {
+    "@id": "https://leccap.engin.umich.edu/application/Lecture+Capture",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
+    "@type": "http://purl.imsglobal.org/caliper/v1/SoftwareApplication",
+    "name": "Lecture Capture",
+    "description": null,
+    "extensions": {
+    },
+    "dateCreated": null,
+    "dateModified": null
+  },
+  "group": null,
+  "membership": null,
+  "federatedSession": null,
+  "openlrsSourceId": "86de25e8-450e-419a-968f-b650e0fa9812"
 }
