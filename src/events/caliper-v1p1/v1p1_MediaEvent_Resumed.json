@@ -16,7 +16,7 @@
       "object": {
         "id": "https://leccap.engin.umich.edu/leccap/viewer/r/FeLqjA",
         "type": "VideoObject",
-        "duration": "PT01H24M59S",
+        "duration": "PT5099.000S",
         "isPartOf": {
           "id": "https://leccap.engin.umich.edu/leccap/site/ziiq5uzrd9k06e6vjew",
           "type": "WebPage",
@@ -30,7 +30,7 @@
         "name": "Lecture recorded on 10/01/2017",
         "dateCreated": "2017-10-01T19:08:04.000Z",
         "dateModified": "2017-10-01T21:29:03.000Z",
-        "currentTime": "PT48M25.156S",
+        "currentTime": "PT2905.156S",
         "isPartOf": {
           "id": "https://leccap.engin.umich.edu/leccap/viewer/r/FeLqjA",
           "type": "VideoObject"
