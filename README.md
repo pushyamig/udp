@@ -30,7 +30,7 @@ The v1p1 `MediaEvent` examples include the envelope; the v1p0 examples do not.
 ### Event thinning
 Caliper v1p1 `Event` and `Entity` representations are considerably "thinner" than their v1p0 predecssors.  Events that reference entities that share the same JSON-LD context should leverage JSON-LD inheritance rules and exclude duplicate `@context` references.  Optional `Event` and `Entity` properties with a value of null, empty or blank should also be omitted.
 
-Use of JSON-LD `@id` and `@type` keywords as property names have also been deprecated in favor of `id` and `type` with aliases provided in the JSON-LD context.  Terms defined in the JSON-LD context (e.g., `MediaEvent`, `Person`, "Paused") can also be used as values in place of their IRIs.  These changes better reflect JSON-LD community practices.
+Use of JSON-LD `@id` and `@type` keywords as property names have also been deprecated in favor of `id` and `type` with aliases provided in the JSON-LD context.  Terms defined in the JSON-LD context (e.g., "MediaEvent", "Person", "Paused") can also be used as values in place of their IRIs.  These changes better reflect JSON-LD community practices.
 
 #### Example: v1p0 MediaEvent
 {
@@ -64,10 +64,9 @@ Use of JSON-LD `@id` and `@type` keywords as property names have also been depre
 }
 
 ### MediaObject duration
-The `duration` represents the length of the raw lecture which may not equate to what the user actually sees if the lecture has been edited. \[@lsloan -- "After I've thought about it more, I believe LC uses this value because an instructor may re-edit their lecture for another use at a later time. By keeping the same duration and internal timestamps, they can compare statistics of students' usage of the sections two editions of a lecture have in common."\]
+The `duration` represents the length of the raw lecture but may not equate to what the user actually sees if the lecture has been edited. \[@lsloan -- "After I've thought about it more, I believe LC uses this value because an instructor may re-edit their lecture for another use at a later time. By keeping the same duration and internal timestamps, they can compare statistics of students' usage of the sections two editions of a lecture have in common."\]
 
 ### MediaEvent object and target properties
-
 The v1p0 `MediaEvent` examples specify `MediaLocation` as the `object` of the interaction.  The v1p1 `MediaEvent` samples designates `VideoObject` as the `object` and references `MediaLocation` as the `target`.
 
 #### Example: v1p0 MediaEvent object and target
@@ -133,7 +132,7 @@ TODO: explain why `session` properties are not always provided.
 We plan to record session information whenever possible.
 
 ### OpenLRS source identifier
-The `openlrsSourceId` property appended to each of the sample v1p0 events by the openLRS data store in order to identify uniquely each `MediaEvent`.  For Caliper v1p1 each `Event` is provisioned with an `id` property.  The emitting application is responsible for assigning a UUID to each `Event` in the form of a URN using the format `urn:uuid:<UUID>'. 
+The `openlrsSourceId` property appended to each of the sample v1p0 events was provided by the openLRS data store in order to identify uniquely each `MediaEvent`.  For Caliper v1p1 each `Event` is provisioned with an `id` property.  The emitting application is responsible for assigning a UUID to each `Event` in the form of a URN using the format `urn:uuid:<UUID>`. 
 
 ### Appendix A. Property changes 
 Property changes between v1p0 and v1p1 as reflected in the sample Media Profile events are noted in the tables below.  For a complete list of changes see the Caliper 1.1 specification, [Appendix H. Change Log] (https://github.com/IMSGlobal/caliper-spec/blob/master/caliper-spec.md#appendix-h-change-log).
