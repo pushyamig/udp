@@ -187,6 +187,8 @@ Property changes between v1p0 and v1p1 as reflected in the sample Media Profile 
 | [Event](#event) | type | New | Replaces use of the [JSON-LD](#jsonldDef) `@type` keyword which is now aliased as `type` in the external IMS Caliper JSON-LD [context](http://purl.imsglobal.org/ctx/caliper/v1p1) document.  `type` string value also changed from [IRI](#iriDef) to [Term](#termDef), e.g. *MediaEvent*. |
 | [Event](#event) | action | Revised | `action` string value changed from [IRI](#iriDef) to [Term](#termDef), e.g. *Paused*. |
 | [Event](#event) | extensions | New | Adds the ability to include custom attributes not defined by the model. |
+| [Event](#event) | federatedSession | Revised | The current user [LtiSession](#ltiSession) in the LMS, if available.  The session will usually be expressed as an object, but may be a IRI corresponding to the LTI session. |
+| [Event](#event) | session | New | The current user [Session](#session) in Lecture Capture.  The session will usually be expressed as an object, but may be a IRI corresponding to the session. |
 
 #### Entity properties
 | Domain | Property | Status | Disposition |
