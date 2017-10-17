@@ -35,10 +35,15 @@
         "name": "Lecture Capture"
       },
       "group": {
-        "id": "_:ctools.umich.edu%3A9a17100e4c806512a4a34b20d61dd8786d2c9826#group",
+        "id": "urn:umich:engin:leccap:section:m7c9zkvh0zw00j9fxto",
         "type": "CourseSection",
-        "name": "ECON 370 001 FA 2017",
-        "courseNumber": "ECON 370 001 FA 2017"
+        "courseNumber": "ECON 370",
+        "isPartOf": {
+          "id": "urn:umich:engin:leccap:course:m7c9zkvh0zw00j9fxto",
+          "type": "CourseOffering",
+          "courseNumber": "ECON 370",
+          "academicSession": "FA 2017"
+        }
       },
       "membership": {
         "id": "_:ctools.umich.edu%3A9a17100e4c806512a4a34b20d61dd8786d2c9826#membership",
