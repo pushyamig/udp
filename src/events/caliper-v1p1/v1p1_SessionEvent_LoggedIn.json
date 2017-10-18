@@ -14,10 +14,9 @@
       },
       "action": "LoggedIn",
       "object": {
-        "id": "urn:umich:engin:leccap:instance:leccap.engin.umich.edu",
+        "id": "https://leccap.engin.umich.edu/leccap/",
         "type": "SoftwareApplication",
-        "name": "Lecture Capture",
-        "description": "https://leccap.engin.umich.edu/"
+        "name": "Lecture Capture"
       },
       "session": {
         "id": "urn:umich:engin:leccap:session:nce9sqls42sps6sg9mkuvb8os6",
