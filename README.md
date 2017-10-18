@@ -172,7 +172,14 @@ Whenever Lecture Capture generates `group` and `membership` properties for stand
 By making a reasonable effort to always populate the `group` and `membership` properties, it becomes possible to correlate events from LTI sessions with those from standalone sessions.  This may enable more informative analyses.
 
 ### MediaEvent session property
-When Caliper v1p0 instrumentation was added to Lecture Capture, the specification didn't include a `session` property for events as v1p1 does now.  After Lecture Capture has been updated to use v1p1, the events it emits will include session information whenever possible.
+When Caliper v1p0 instrumentation was added to Lecture Capture, the specification didn't include a `session` property for events as v1p1 does now.  After Lecture Capture has been updated to use v1p1, the events it emits of all types will include session information whenever possible.
+
+### Federated session property
+When the current LC session was started via LTI request, all events in that session will have the LTI parameters stored within the `federatedSession` property.  As the Caliper v1p1 spec states, the value of this property will be a `LtiSession` entity.  The `LtiSession.messageParameters` property will contain the raw LTI request parameters, with the following exceptions:
+ 
+1. `oauth*`: These may pose security risks.
+1. `lis_person_name_*` and `lis_person_contact_email_primary`: These are unnecessary PII exposure.
+    `
 
 ### OpenLRS source identifier
 The `openlrsSourceId` property appended to each of the sample v1p0 events was provided by the openLRS data store in order to identify uniquely each `MediaEvent`.  For Caliper v1p1 each `Event` is provisioned with an `id` property.  The emitting application is responsible for assigning a UUID to each `Event` in the form of a URN using the format `urn:uuid:<UUID>`. 
