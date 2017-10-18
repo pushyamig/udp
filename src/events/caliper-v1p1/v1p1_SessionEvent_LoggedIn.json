@@ -7,11 +7,7 @@
       "@context": "http://purl.imsglobal.org/ctx/caliper/v1p1",
       "id": "urn:umich:engin:leccap:uuid:956b4a02-8de0-4991-b8c5-b6efbb6b4cab",
       "type": "SessionEvent",
-      "actor": {
-        "id": "urn:umich:engin:leccap:user:culmccor",
-        "type": "Person",
-        "name": "Cullen McCormick"
-      },
+      "actor": "https://mcommunity.umich.edu/#profile:culmccor",
       "action": "LoggedIn",
       "object": {
         "id": "https://leccap.engin.umich.edu/leccap/",
@@ -22,10 +18,7 @@
         "id": "urn:umich:engin:leccap:session:nce9sqls42sps6sg9mkuvb8os6",
         "type": "Session",
         "name": "session-nce9sqls42sps6sg9mkuvb8os6",
-        "user": {
-          "id": "urn:umich:engin:leccap:user:culmccor",
-          "type": "Person"
-        },
+        "user": "https://mcommunity.umich.edu/#profile:culmccor",
         "startedAtTime": "2017-10-02T13:45:13.000Z"
       },
       "eventTime": "2017-10-02T14:53:30.000Z",
@@ -52,7 +45,7 @@
       "federatedSession": {
         "id": "urn:umich:canvas:session:9c87f8f46578cac2d97dd43fe4a95cbd27cb7bce",
         "type": "LtiSession",
-        "user": "urn:umich:engin:leccap:user:culmccor",
+        "user": "https://mcommunity.umich.edu/#profile:culmccor",
         "messageParameters": {
           "oauth_consumer_key": "1038472",
           "oauth_signature_method": "HMAC-SHA1",
