@@ -5,7 +5,7 @@
   "data": [
     {
       "@context": "http://purl.imsglobal.org/ctx/caliper/v1p1",
-      "id": "urn:uuid:956b4a02-8de0-4991-b8c5-b6efbb6b4cab",
+      "id": "urn:umich:engin:leccap:uuid:956b4a02-8de0-4991-b8c5-b6efbb6b4cab",
       "type": "SessionEvent",
       "actor": {
         "id": "urn:umich:engin:leccap:user:culmccor",
@@ -51,7 +51,7 @@
         "status": "Active"
       },
       "federatedSession": {
-        "id": "urn:umich:canvas:9c87f8f46578cac2d97dd43fe4a95cbd27cb7bce",
+        "id": "urn:umich:canvas:session:9c87f8f46578cac2d97dd43fe4a95cbd27cb7bce",
         "type": "LtiSession",
         "user": "urn:umich:engin:leccap:user:culmccor",
         "messageParameters": {
