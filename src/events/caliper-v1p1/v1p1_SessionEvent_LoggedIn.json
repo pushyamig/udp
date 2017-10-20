@@ -9,11 +9,7 @@
       "type": "SessionEvent",
       "actor": "https://mcommunity.umich.edu/#profile:culmccor",
       "action": "LoggedIn",
-      "object": {
-        "id": "https://leccap.engin.umich.edu/leccap/",
-        "type": "SoftwareApplication",
-        "name": "Lecture Capture"
-      },
+      "object": "https://leccap.engin.umich.edu/leccap/",
       "session": {
         "id": "urn:umich:engin:leccap:session:nce9sqls42sps6sg9mkuvb8os6",
         "type": "Session",
@@ -22,10 +18,7 @@
         "startedAtTime": "2017-10-02T13:45:13.000Z"
       },
       "eventTime": "2017-10-02T14:53:30.000Z",
-      "edApp": {
-        "id": "urn:umich:engin:leccap:instance:leccap.engin.umich.edu",
-        "type": "SoftwareApplication"
-      },
+      "edApp": "https://leccap.engin.umich.edu/leccap/",
       "group": {
         "id": "urn:umich:engin:leccap:course:m7c9zkvh0zw00j9fxto",
         "type": "CourseOffering",
