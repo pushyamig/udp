@@ -13,23 +13,22 @@
       "session": {
         "id": "urn:umich:engin:leccap:session:nce9sqls42sps6sg9mkuvb8os6",
         "type": "Session",
-        "name": "session-nce9sqls42sps6sg9mkuvb8os6",
         "user": "https://mcommunity.umich.edu/#profile:culmccor",
         "startedAtTime": "2017-10-02T13:45:13.000Z"
       },
       "eventTime": "2017-10-02T14:53:30.000Z",
       "edApp": "https://leccap.engin.umich.edu/leccap/",
       "group": {
-        "id": "urn:umich:engin:leccap:course:m7c9zkvh0zw00j9fxto",
+        "id": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#CourseOffering",
         "type": "CourseOffering",
         "courseNumber": "ECON 370",
         "academicSession": "FA 2017"
       },
       "membership": {
-        "id": "urn:umich:engin:leccap:membership:m7c9zkvh0zw00j9fxto",
+        "id": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#Membership",
         "type": "Membership",
-        "member": "urn:umich:engin:leccap:user:culmccor",
-        "organization": "urn:umich:engin:leccap:course:m7c9zkvh0zw00j9fxto",
+        "member": "https://mcommunity.umich.edu/#profile:culmccor",
+        "organization": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#CourseOffering",
         "roles": [
           "Learner"
         ],
@@ -40,41 +39,12 @@
         "type": "LtiSession",
         "user": "https://mcommunity.umich.edu/#profile:culmccor",
         "messageParameters": {
-          "context_id": "9c87f8f46578cac2d97dd43fe4a95cbd27cb7bce",
-          "context_label": "ECON 370 001 FA 2017",
-          "context_title": "ECON 370 001 FA 2017",
-          "custom_canvas_api_domain": "umich.instructure.com",
           "custom_canvas_course_id": "182507",
-          "custom_canvas_enrollment_state": null,
           "custom_canvas_user_id": "88",
-          "custom_canvas_user_login_id": "culmccor",
-          "custom_canvas_workflow_state": "available",
-          "ext_roles": [
-            "urn:lti:instrole:ims/lis/Student",
-            "urn:lti:sysrole:ims/lis/User"
-          ],
-          "launch_presentation_document_target": "iframe",
-          "launch_presentation_height": "400",
-          "launch_presentation_locale": "en",
-          "launch_presentation_return_url": "https://umich.instructure.com/courses/182507/external_content/success/external_tool_redirect",
-          "launch_presentation_width": "800",
           "lis_course_offering_sourcedid": "216004646201001",
           "lis_person_sourcedid": "92978488",
-          "lti_message_type": "basic-lti-launch-request",
-          "lti_version": "LTI-1p0",
-          "resource_link_id": "9c87f8f46578cac2d97dd43fe4a95cbd27cb7bce",
-          "resource_link_title": "Lecture Recording",
-          "roles": "urn:lti:instrole:ims/lis/Administrator",
-          "tool_consumer_info_product_family_code": "canvas",
-          "tool_consumer_info_version": "cloud",
-          "tool_consumer_instance_contact_email": "notifications@instructure.com",
-          "tool_consumer_instance_guid": "7db438071375c02373713c12c73869ff2f470b68.umich.instructure.com",
-          "tool_consumer_instance_name": "University of Michigan - Ann Arbor",
-          "user_id": "2888df90cf4373182d5480e44f24643b3c6da032",
-          "user_image": "https://secure.gravatar.com/avatar/2308f1a59ccb2740e860b06807daec74?s=50&d=https%3A%2F%2Fcanvas.instructure.com%2Fimages%2Fmessages%2Favatar-50.png"
-        },
-        "dateCreated": "2016-11-15T10:15:00.000Z",
-        "startedAtTime": "2016-11-15T10:15:00.000Z"
+          "resource_link_id": "9a17100e4c806512a4a34b20d61dd8786d2c9826"
+        }
       }
     }
   ]
