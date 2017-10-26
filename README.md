@@ -10,7 +10,7 @@ Caliper `Event` and `Entity` data are transmitted inside an Envelope, a purpose-
 
 The v1p1 `MediaEvent` examples include the envelope; the v1p0 examples do not.
 
-#### Example: Caliper Envelope
+#### Example: v1p1 Envelope
 ```json
 {
   "sensor": "https://example.edu/sensors/1",
@@ -32,6 +32,8 @@ Caliper v1p1 `Event` and `Entity` representations are considerably "thinner" tha
 
 Use of JSON-LD `@id` and `@type` keywords as property names have also been deprecated in favor of `id` and `type` with aliases provided in the JSON-LD context.  Terms defined in the JSON-LD context (e.g., "MediaEvent", "Person", "Paused") can also be used as values in place of their IRIs.  These changes better reflect JSON-LD community practices.
 
+Some properties that contain objects may have those objects coerced down to an IRI, which is the value of their `id` property.  This is usually done after the object has been defined earlier in the event or if the object has been "described" to the endpoint at some earlier time.  In the example below, the `actor` property is an example of this.
+
 #### Example: v1p0 MediaEvent
 ```json
 {
@@ -41,7 +43,7 @@ Use of JSON-LD `@id` and `@type` keywords as property names have also been depre
     "@context": "http://purl.imsglobal.org/ctx/caliper/v1/Context",
     "@id": "https://leccap.engin.umich.edu/person/naufalza",
     "@type": "http://purl.imsglobal.org/caliper/v1/lis/Person",
-    "name": null,
+    "name": "Nau Falza",
     "description": null,
     "dateCreated": null,
     "dateModified": null,
@@ -58,10 +60,7 @@ Use of JSON-LD `@id` and `@type` keywords as property names have also been depre
   "@context": "http://purl.imsglobal.org/ctx/caliper/v1p1",
   "id": "urn:uuid:3a648e68-f00d-4c08-aa59-8738e1884f2c",
   "type": "MediaEvent",
-  "actor": {
-    "id": "https://leccap.engin.umich.edu/person/naufalza",
-    "type": "Person"
-  },
+  "actor": "https://mcommunity.umich.edu/#profile:naufalza",
   "action": "Paused",
   "...": "..."
 }
@@ -115,20 +114,17 @@ The v1p0 `MediaEvent` examples specify `MediaLocation` as the `object` of the in
     }
   },
   "target": {
-    "id": "https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8",
+    "id": "https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8#type=MediaLocation",
     "type": "MediaLocation",
     "currentTime": "PT4540.137S",
-    "isPartOf": {
-      "id": "https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8",
-      "type": "VideoObject"
-    }
+    "isPartOf": "https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8"
   },
   "...": "..."
 }
 ```
 
 ### MediaEvent group and membership properties
-Lecture Capture includes `group` and `membership` properties in events only when the user's session began with an LTI request.  In those cases, the LMS provided course and membership information in the LTI request.  That information is used in various properties of the `CourseSection` and `Membership` objects assigned to the `group` and `membership` properties, respectively.  
+Lecture Capture includes `group` and `membership` properties in events only when the user's session began with an LTI request.  In those cases, the LMS provided course and membership information in the LTI request.  That information is used in various properties of the `CourseOffering` and `Membership` objects assigned to the `group` and `membership` properties, respectively.  
 
 In hindsight, this wasn't a good idea.  Lecture Capture contains similar data that could be used for this purpose.  Lecture Capture organizes its recordings into "sites", which roughly correspond to a University course.  The naming of Lecture Capture course sites may not always use the same scheme as course names in the LMS, but they're often close.  This information is partially available in various other properties, such as `object.isPartOf.name`.  For example, see the one example event which includes values for `group` and `membership`.
 
@@ -147,16 +143,16 @@ In hindsight, this wasn't a good idea.  Lecture Capture contains similar data th
   },
   "...": "...",
   "group": {
-    "id": "_:ctools.umich.edu%3Ab2640c9071b9ded4285c004c7c445682aca60ed4#group",
-    "type": "CourseSection",
-    "name": "BIOLOGY 305 001 FA 2017",
-    "courseNumber": "BIOLOGY 305 001 FA 2017"
+    "id": "https://leccap.engin.umich.edu/leccap/site/iosb1eezb220x49khge#type=CourseOffering",
+    "type": "CourseOffering",
+    "courseNumber": "BIOLOGY 305 001",
+    "academicSession": "FA 2017"
   },
   "membership": {
-    "id": "_:ctools.umich.edu%3Ab2640c9071b9ded4285c004c7c445682aca60ed4#membership",
+    "id": "https://leccap.engin.umich.edu/leccap/site/iosb1eezb220x49khge#type=Membership&member=dlench",
     "type": "Membership",
-    "member": "https://leccap.engin.umich.edu/users/xyz",
-    "organization": "_:ctools.umich.edu%3Ab2640c9071b9ded4285c004c7c445682aca60ed4#group",
+    "member": "https://mcommunity.umich.edu/#profile:dlench",
+    "organization": "https://leccap.engin.umich.edu/leccap/site/iosb1eezb220x49khge#type=CourseOffering",
     "roles": ["Learner"],
     "status": "Active"
   }
@@ -227,3 +223,23 @@ Property changes between v1p0 and v1p1 as reflected in the sample Media Profile 
 | [Membership](#membership) | status | Revised | `status` string value changed from [IRI](#iriDef) to [Term](#termDef), e.g. *Active*. |
 | [Session](#session) | user | New | Replaces deprecated `actor` property in order to provide a more concise term. |
 | [SoftwareApplication](#softwareApplication) | version | New | Adds the ability to specify the current form or version of the [SoftwareApplication](#softwareApplication). |
+
+### Appendix B. Property value source data 
+
+1. `.actor`:  URL of user's profile in MCommunity, "`https://mcommunity.umich.edu/#profile:`" with the user's uniqname appended.
+1. `.edApp`:  URL of LC homepage.
+1. `.membership.member`:  `.actor`.
+1. `.federatedSession.id`:  "`urn:instructure:canvas:umich:session:`" with value of `oauth_nonce` from LTI parameters appended.
+1. `.federatedSession.user`:  `.actor`.
+1. For `MediaEvent` type events:
+    1. `.object.id`:  URL of lecture's viewer in LC.
+    1. `.object.isPartOf.id`:  URL of lecture's course site in LC.
+    1. `.target.id`:  `.object.id` value with "`#type=MediaLocation`" appended.
+    1. `.target.isPartOf`:  `.object.id`.
+    1. `.group.id`:  `.object.isPartOf.id` value with "`#type=CourseOffering`" appended.
+    1. `.membership.id`:  `.object.isPartOf.id` value with "`#type=Membership&member=`" and user's uniqname appended.
+1. For `SessionEvent` type events:
+    1. `.object`:  `.edApp`.
+    1. `.group.id`:  URL of lecture's course site in LC with "`#type=CourseOffering`" appended.
+    1. `.membership.id`:  URL of lecture's course site in LC with "`#type=Membership&member=`" and user's uniqname appended.
+1. `.membership.organization`:  `.group.id`.
