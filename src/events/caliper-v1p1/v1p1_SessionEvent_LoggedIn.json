@@ -5,50 +5,46 @@
   "data": [
     {
       "@context": "http://purl.imsglobal.org/ctx/caliper/v1p1",
-      "id": "urn:uuid:956b4a02-8de0-4991-b8c5-b6efbb6b4cab",
+      "id": "urn:umich:engin:leccap:uuid:956b4a02-8de0-4991-b8c5-b6efbb6b4cab",
       "type": "SessionEvent",
-      "actor": {
-        "id": "https://leccap.engin.umich.edu/users/culmccor",
-        "type": "Person",
-        "name": "Cullen McCormick"
-      },
+      "actor": "https://mcommunity.umich.edu/#profile:culmccor",
       "action": "LoggedIn",
-      "object": {
-        "id": "https://leccap.engin.umich.edu/application/Lecture+Capture",
-        "type": "SoftwareApplication",
-        "name": "Lecture Capture"
-      },
+      "object": "https://leccap.engin.umich.edu/leccap/",
       "session": {
-        "id": "https://leccap.engin.umich.edu/session/nce9sqls42sps6sg9mkuvb8os6",
+        "id": "urn:umich:engin:leccap:session:nce9sqls42sps6sg9mkuvb8os6",
         "type": "Session",
-        "name": "session-nce9sqls42sps6sg9mkuvb8os6",
-        "user": {
-          "id": "https://leccap.engin.umich.edu/users/culmccor",
-          "type": "Person"
-        },
+        "user": "https://mcommunity.umich.edu/#profile:culmccor",
         "startedAtTime": "2017-10-02T13:45:13.000Z"
       },
       "eventTime": "2017-10-02T14:53:30.000Z",
-      "edApp": {
-        "id": "https://leccap.engin.umich.edu/application/Lecture+Capture",
-        "type": "SoftwareApplication",
-        "name": "Lecture Capture"
-      },
+      "edApp": "https://leccap.engin.umich.edu/leccap/",
       "group": {
-        "id": "_:ctools.umich.edu%3A9a17100e4c806512a4a34b20d61dd8786d2c9826#group",
-        "type": "CourseSection",
-        "name": "ECON 370 001 FA 2017",
-        "courseNumber": "ECON 370 001 FA 2017"
+        "id": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#CourseOffering",
+        "type": "CourseOffering",
+        "courseNumber": "ECON 370",
+        "academicSession": "FA 2017"
       },
       "membership": {
-        "id": "_:ctools.umich.edu%3A9a17100e4c806512a4a34b20d61dd8786d2c9826#membership",
+        "id": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#Membership",
         "type": "Membership",
-        "member": "https://leccap.engin.umich.edu/users/culmccor",
-        "organization": "_:ctools.umich.edu%3A9a17100e4c806512a4a34b20d61dd8786d2c9826#group",
+        "member": "https://mcommunity.umich.edu/#profile:culmccor",
+        "organization": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#CourseOffering",
         "roles": [
           "Learner"
         ],
         "status": "Active"
+      },
+      "federatedSession": {
+        "id": "urn:umich:canvas:session:9c87f8f46578cac2d97dd43fe4a95cbd27cb7bce",
+        "type": "LtiSession",
+        "user": "https://mcommunity.umich.edu/#profile:culmccor",
+        "messageParameters": {
+          "custom_canvas_course_id": "182507",
+          "custom_canvas_user_id": "88",
+          "lis_course_offering_sourcedid": "216004646201001",
+          "lis_person_sourcedid": "92978488",
+          "resource_link_id": "9a17100e4c806512a4a34b20d61dd8786d2c9826"
+        }
       }
     }
   ]
