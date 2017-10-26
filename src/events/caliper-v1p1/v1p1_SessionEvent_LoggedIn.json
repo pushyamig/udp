@@ -19,23 +19,23 @@
       "eventTime": "2017-10-02T14:53:30.000Z",
       "edApp": "https://leccap.engin.umich.edu/leccap/",
       "group": {
-        "id": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#CourseOffering",
+        "id": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#type=CourseOffering",
         "type": "CourseOffering",
         "courseNumber": "ECON 370",
         "academicSession": "FA 2017"
       },
       "membership": {
-        "id": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#Membership",
+        "id": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#type=Membership&member=culmccor",
         "type": "Membership",
         "member": "https://mcommunity.umich.edu/#profile:culmccor",
-        "organization": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#CourseOffering",
+        "organization": "https://leccap.engin.umich.edu/leccap/site/m7c9zkvh0zw00j9fxto#type=CourseOffering",
         "roles": [
           "Learner"
         ],
         "status": "Active"
       },
       "federatedSession": {
-        "id": "urn:umich:canvas:session:9c87f8f46578cac2d97dd43fe4a95cbd27cb7bce",
+        "id": "urn:instructure:canvas:umich:session:CeMXNmX3CKwEYiIJOxc5aBlZMc8pnYddSxkmLA",
         "type": "LtiSession",
         "user": "https://mcommunity.umich.edu/#profile:culmccor",
         "messageParameters": {
