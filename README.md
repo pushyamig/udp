@@ -227,7 +227,7 @@ Property changes between v1p0 and v1p1 as reflected in the sample Media Profile 
 ### Appendix B. Property value source data 
 
 1. `.actor`:  URL of user's profile in MCommunity, "`https://mcommunity.umich.edu/#profile:`" with the user's uniqname appended.
-1. `.edApp`:  URL of LC homepage.
+1. `.edApp`:  URL of LC homepage, "https://leccap.engin.umich.edu/leccap/".
 1. `.membership.member`:  `.actor`.
 1. `.federatedSession.id`:  "`urn:instructure:canvas:umich:session:`" with value of `oauth_nonce` from LTI parameters appended.
 1. `.federatedSession.user`:  `.actor`.
