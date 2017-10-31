@@ -47,6 +47,12 @@
         ],
         "status": "Active"
       },
+      "session": {
+        "id": "urn:umich:engin:leccap:session:6so8bvukm9gs6sps24slqs9ecn",
+        "type": "Session",
+        "user": "https://mcommunity.umich.edu/#profile:naufalza",
+        "startedAtTime": "2017-10-01T21:17:09.457Z"
+      },
       "federatedSession": {
         "id": "urn:instructure:canvas:umich:session:CeMXNmX3CKwEYiIJOxc5aBlZMc8pnYddSxkmLA",
         "type": "LtiSession",

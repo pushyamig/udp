@@ -47,6 +47,12 @@
         ],
         "status": "Active"
       },
+      "session": {
+        "id": "urn:umich:engin:leccap:session:6fb8oihxz9tf6fcf24fydf9rpa",
+        "type": "Session",
+        "user": "https://mcommunity.umich.edu/#profile:dlench",
+        "startedAtTime": "2017-10-01T20:12:32.995Z"
+      },
       "federatedSession": {
         "id": "urn:instructure:canvas:umich:session:CeMXNmX3CKwEYiIJOxc5aBlZMc8pnYddSxkmLA",
         "type": "LtiSession",

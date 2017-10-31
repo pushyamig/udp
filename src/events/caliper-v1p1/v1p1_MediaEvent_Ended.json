@@ -47,6 +47,12 @@
         ],
         "status": "Active"
       },
+      "session": {
+        "id": "urn:umich:engin:leccap:session:T7Lzgsmtq0x2e1204jut6sop6",
+        "type": "Session",
+        "user": "https://mcommunity.umich.edu/#profile:psenka",
+        "startedAtTime": "2017-10-02T13:45:13.060Z"
+      },
       "federatedSession": {
         "id": "urn:instructure:canvas:umich:session:CeMXNmX3CKwEYiIJOxc5aBlZMc8pnYddSxkmLA",
         "type": "LtiSession",

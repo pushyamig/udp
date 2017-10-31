@@ -47,6 +47,12 @@
         ],
         "status": "Active"
       },
+      "session": {
+        "id": "urn:umich:engin:leccap:session:apr9fdyf42fcf6ft9zxhio8bf6",
+        "type": "Session",
+        "user": "https://mcommunity.umich.edu/#profile:ranpan",
+        "startedAtTime": "2017-10-01T21:18:13.575Z"
+      },
       "federatedSession": {
         "id": "urn:instructure:canvas:umich:session:CeMXNmX3CKwEYiIJOxc5aBlZMc8pnYddSxkmLA",
         "type": "LtiSession",
