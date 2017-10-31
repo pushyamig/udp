@@ -7,11 +7,7 @@
       "@context": "http://purl.imsglobal.org/ctx/caliper/v1p1",
       "id": "urn:uuid:956b4a02-8de0-4991-b8c5-b6eebb6b4cab",
       "type": "MediaEvent",
-      "actor": {
-        "id": "https://leccap.engin.umich.edu/users/dlench",
-        "type": "Person",
-        "name": "Daniel Lenchner"
-      },
+      "actor": "https://mcommunity.umich.edu/#profile:dlench",
       "action": "Started",
       "object": {
         "id": "https://leccap.engin.umich.edu/leccap/viewer/r/DOUPtp",
@@ -28,35 +24,46 @@
         }
       },
       "target": {
-        "id": "https://leccap.engin.umich.edu/leccap/viewer/r/DOUPtp",
+        "id": "https://leccap.engin.umich.edu/leccap/viewer/r/DOUPtp#type=MediaLocation",
         "type": "MediaLocation",
         "currentTime": "PT0.000S",
-        "isPartOf": {
-          "id": "https://leccap.engin.umich.edu/leccap/viewer/r/DOUPtp",
-          "type": "VideoObject"
-        }
+        "isPartOf": "https://leccap.engin.umich.edu/leccap/viewer/r/DOUPtp"
       },
       "eventTime": "2017-10-01T21:29:03.000Z",
-      "edApp": {
-        "id": "https://leccap.engin.umich.edu/application/Lecture+Capture",
-        "type": "SoftwareApplication",
-        "name": "Lecture Capture"
-      },
+      "edApp": "https://leccap.engin.umich.edu/leccap/",
       "group": {
-        "id": "_:ctools.umich.edu%3Ab2640c9071b9ded4285c004c7c445682aca60ed4#group",
-        "type": "CourseSection",
-        "name": "BIOLOGY 305 001 FA 2017",
-        "courseNumber": "BIOLOGY 305 001 FA 2017"
+        "id": "https://leccap.engin.umich.edu/leccap/site/iosb1eezb220x49khge#type=CourseOffering",
+        "type": "CourseOffering",
+        "courseNumber": "BIOLOGY 305 001",
+        "academicSession": "FA 2017"
       },
       "membership": {
-        "id": "_:ctools.umich.edu%3Ab2640c9071b9ded4285c004c7c445682aca60ed4#membership",
+        "id": "https://leccap.engin.umich.edu/leccap/site/iosb1eezb220x49khge#type=Membership&member=dlench",
         "type": "Membership",
-        "member": "https://leccap.engin.umich.edu/users/dlench",
-        "organization": "_:ctools.umich.edu%3Ab2640c9071b9ded4285c004c7c445682aca60ed4#group",
+        "member": "https://mcommunity.umich.edu/#profile:dlench",
+        "organization": "https://leccap.engin.umich.edu/leccap/site/iosb1eezb220x49khge#type=CourseOffering",
         "roles": [
           "Learner"
         ],
         "status": "Active"
+      },
+      "session": {
+        "id": "urn:umich:engin:leccap:session:6fb8oihxz9tf6fcf24fydf9rpa",
+        "type": "Session",
+        "user": "https://mcommunity.umich.edu/#profile:dlench",
+        "startedAtTime": "2017-10-01T20:12:32.995Z"
+      },
+      "federatedSession": {
+        "id": "urn:instructure:canvas:umich:session:CeMXNmX3CKwEYiIJOxc5aBlZMc8pnYddSxkmLA",
+        "type": "LtiSession",
+        "user": "https://mcommunity.umich.edu/#profile:dlench",
+        "messageParameters": {
+          "custom_canvas_course_id": "182507",
+          "custom_canvas_user_id": "88",
+          "lis_course_offering_sourcedid": "216004646201001",
+          "lis_person_sourcedid": "92978488",
+          "resource_link_id": "9a17100e4c806512a4a34b20d61dd8786d2c9826"
+        }
       }
     }
   ]
