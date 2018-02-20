@@ -48,7 +48,7 @@
               "    resp.jsonBody(eventId + '.' + udpQueueName);",
               "    ",
               "    var jsonData = pm.response.json();",
-              "    pm.expect(jsonData[eventId][udpQueueName]).match(/^3/);  // It's usually \"3\" followed by 13 digits",
+              "    pm.expect(parseInt(jsonData[eventId][udpQueueName], 10)).gt(40096419239401);",
               "});",
               ""
             ]
