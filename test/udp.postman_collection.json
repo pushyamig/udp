@@ -15,7 +15,8 @@
             "id": "aeafa23b-4c74-4e41-92d9-9694498e24c3",
             "type": "text/javascript",
             "exec": [
-              "eval(pm.variables.get('initRequest')); // Defined in collection pre-request script"
+              "eval(pm.variables.get('initRequest')); // Defined in collection pre-request script",
+              ""
             ]
           }
         },
@@ -25,27 +26,23 @@
             "id": "3f1eea73-34e7-4299-9ee6-0c2ee8ec533f",
             "type": "text/javascript",
             "exec": [
-              "pm.test('Response: 200 OK', function () {",
-              "    pm.response.to.have.status(200);",
+              "eval(pm.variables.get('testUtils')); // Defined in collection tests",
+              "",
+              "pm.test('Request OK', function () {",
+              "    expectResponse.status(200);",
               "});",
               "",
-              "var resp = pm.expect(pm.response);",
-              "",
-              "pm.test('Response: OK to process', function () { ",
-              "    resp.ok;",
-              "    resp.header('content-type');",
-              "    ",
-              "    // FIXME: UDP should return content type \"application/json\"!  See: http://jibbering.com/blog/?p=514",
-              "    pm.expect(pm.response.headers.get('content-type')).match(/^text\\/html/i);",
-              "",
-              "    resp.json; // Shouldn't this fail because real JSON requires content type \"application/json\"?",
+              "pm.test('Response contains JSON', function () { ",
+              "    expectResponse.header('content-type');",
+              "    pm.expect(pm.response.headers.get('content-type')).match(/^application\\/json/i);",
+              "    expectResponse.json;",
               "});",
               "",
               "pm.test('UDP accepted LC event in \"Gold\" queue', function() {",
               "    var eventId = pm.globals.get('eventId');",
               "    var udpQueueName = 'STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev';",
               "",
-              "    resp.jsonBody(eventId + '.' + udpQueueName);",
+              "    expectResponse.jsonBody(eventId + '.' + udpQueueName);",
               "    ",
               "    var jsonData = pm.response.json();",
               "    pm.expect(parseInt(jsonData[eventId][udpQueueName], 10)).gt(40096419239401);",
@@ -113,7 +110,6 @@
           "status": "OK",
           "code": 200,
           "_postman_previewlanguage": "html",
-          "_postman_previewtype": "text",
           "header": [
             {
               "key": "Content-Encoding",
@@ -133,7 +129,6 @@
             }
           ],
           "cookie": [],
-          "responseTime": 646,
           "body": "{\"urn:uuid:654e4d31-e56d-45cc-9661-deb323080f7a\": {\"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"39447962165063\"}}"
         }
       ]
@@ -164,8 +159,11 @@
           "    pm.globals.set('timestampUtcIso8601', (new Date()).toISOString());",
           "    pm.globals.set('randomString', Math.random().toString(26).substring(2).replace(/[0-9]/g, c => 'qrstuvwxyz'[c]));",
           "",
-          "    var uuid = require('uuid');",
+          "    uuid = require('uuid');",
           "    pm.globals.set('eventId', 'urn:uuid:' + uuid.v4());",
+          "    ",
+          "    // Remember: Functions must be defined this way and without `var`, `const`, etc.",
+          "    fubar = function() {return 'fubar';}",
           "}",
           "pm.globals.set(initRequest.name, initRequest.toString() + initRequest.name + '()');",
           ""
@@ -178,6 +176,10 @@
         "id": "42eee30c-559d-4d33-abb9-64aa5bcccceb",
         "type": "text/javascript",
         "exec": [
+          "function testUtils() {",
+          "    expectResponse = pm.expect(pm.response);",
+          "}",
+          "pm.globals.set(testUtils.name, testUtils.toString() + testUtils.name + '()');",
           ""
         ]
       }
