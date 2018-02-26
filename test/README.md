@@ -90,3 +90,52 @@ new tab.
 1. Click the "Send" button.  The response body will be shown by default.
 Click on the "Test Results" tab to see a summary of the tests for that
 single request.
+
+## CLI
+
+Postman provides a NodeJS-based CLI for running collection tests, called
+`newman`.  ("Hello, Newman.")
+
+1. Install `newman`:
+
+    ```
+    npm install newman --global
+    ```
+
+1. Create a file with the UDP authorization token as a Postman global
+variable:
+
+    (Replace `64_digit_hexadecimal_authorization_token` with actual UDP
+    authorization token.)
+
+    ```
+    mkdir -p ~/.postman
+    cat > ~/.postman/udp-authz.postman_global.json <<EOT
+    {
+      "name": "udp-authz",
+      "values": [
+        {
+          "enabled": true,
+          "key": "udp_token",
+          "value": "64_digit_hexadecimal_authorization_token",
+          "type": "text"
+        }
+      ],
+      "_postman_variable_scope": "global"
+    }
+    EOT
+    ```
+    
+1. Run `newman` using the name of the collection, the authorization token
+from the global variable file, and the user/course values from an
+environment variable file:    
+
+    ```text
+    newman run udp.postman_collection.json \
+      -g ~/.postman/udp-authz.postman_global.json \
+      -e udp-ststvii.postman_environment.json
+    ```
+    
+    **_Note_**:  Unlike typical CLI programs, `newman` requires the name
+    of the input file (`udp.postman_collection.json`) **_before_** the
+    options (`-g` and `-e`).
