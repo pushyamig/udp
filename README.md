@@ -227,7 +227,7 @@ Property changes between v1p0 and v1p1 as reflected in the sample Media Profile 
 ### Appendix B. Property value source data 
 
 1. `.actor`:  URL of user's profile in MCommunity, "`https://mcommunity.umich.edu/#profile:`" with the user's uniqname appended.
-1. `.edApp`:  URI of Lecture Capture, like "https://leccap.engin.umich.edu/#applicationName=Lecture+Capture".
+1. `.edApp`:  URI of Lecture Capture, like "`https://leccap.engin.umich.edu/#applicationName=Lecture+Capture`".
     The hostname may change depending on the instance of the application (additional production instances, development
     instances, etc.).  The "applicationName" parameter of the fragment is configurable in the application, but it will
     usually be this value.
