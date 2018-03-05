@@ -227,7 +227,10 @@ Property changes between v1p0 and v1p1 as reflected in the sample Media Profile 
 ### Appendix B. Property value source data 
 
 1. `.actor`:  URL of user's profile in MCommunity, "`https://mcommunity.umich.edu/#profile:`" with the user's uniqname appended.
-1. `.edApp`:  URL of LC homepage, "https://leccap.engin.umich.edu/leccap/".
+1. `.edApp`:  URI of Lecture Capture, like "https://leccap.engin.umich.edu/#applicationName=Lecture+Capture".
+    The hostname may change depending on the instance of the application (additional production instances, development
+    instances, etc.).  The "applicationName" parameter of the fragment is configurable in the application, but it will
+    usually be this value.
 1. `.membership.member`:  `.actor`.
 1. `.federatedSession.id`:  "`urn:instructure:canvas:umich:session:`" with value of `oauth_nonce` from LTI parameters appended.
 1. `.federatedSession.user`:  `.actor`.
