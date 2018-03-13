@@ -42,6 +42,7 @@ the "Bulk Edit" link near the right side.
     udp_uniqname:test_user_uniqname_here
     udp_lis_course_offering_sourcedid:test_course_SIS_ID
     udp_lis_person_sourcedid:test_user_SIS_ID
+    gcp_token:authorization_token
     ```
     
     Replace the values as appropriate.  Ideally, the test user uniqname
@@ -139,3 +140,40 @@ environment variable file:
     **_Note_**:  Unlike typical CLI programs, `newman` requires the name
     of the input file (`udp.postman_collection.json`) **_before_** the
     options (`-g` and `-e`).
+    
+## GCP Authorization token generation
+Postman file `udp.E-25_End-to-End.json` makes a full End-to End testing from sending event to UDP to appearing in GCP bigquery. 
+In postman for making BigQuery REST Api calls needs a Oauth token, to generate that uses `token_generator.sh`script. This token is 
+good for 1 hour. you will need to install Google-cloud-SDK as described here (https://cloud.google.com/sdk/docs/quickstart-macos).
+Also this needs service-account.json file provided by Unizin with setting 
+an environmental variable `export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"` for token generation
+   
+        ./token_generator.sh unizin-udp-data-umich-dev
+            access token: ya29.c.YYYYyyeyeyeyeyeyeyeyeYYYYYyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+            {
+             "kind": "bigquery#datasetList",
+             "etag": "\"OhENgf8ForUUnKbYWWdbr5aJHYs/wFMk1qUe0Ql850d4ppc9vBz3grc\"",
+             "datasets": [
+              {
+               "kind": "bigquery#dataset",
+               "id": "unizin-udp-data-umich-dev:learning_datasets",
+               "datasetReference": {
+                "datasetId": "learning_datasets",
+                "projectId": "unizin-udp-data-umich-dev"
+               },
+               "location": "US"
+              }
+             ]
+            }
+    
+   
+
+Grab the `access token` value and place it in the environmental variables `gcp_token` along with others.
+
+Token generation set up process is little bit laborious and that too the token expire in 1hour. I haven't figured out a 
+way to tie the service account.json file with postman for making the token generation process automatic. But I will keep looking.
+
+## run udp.E-25_End-to-End.json
+I have kept a separate file for testing the use case E-25 i.e sending the event to the UDP and Querying BigQuery for event occurrence under 30 sec.
+Unizin promises to have the event appear in the BigQuery in 30sec, so this use case is delaying the call for 30 sec and then query BQ for event presence.
+Step for running this in Postman is same as above with once change is adding a new Environmental variable `gcp_token`

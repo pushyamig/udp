@@ -1,0 +1,230 @@
+{
+	"info": {
+		"name": "udp",
+		"_postman_id": "67d84efb-e459-d525-4490-3fe1312c7c92",
+		"description": "# Requests and tests for Unizin Data Platform (UDP)\n\nAuthor: Lance E Sloan (lsloan@umich.edu)\n\nRequires Postman environment keys:\n* udp_token\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "E-25_Event-to-UDP-to-BQ",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "aeafa23b-4c74-4e41-92d9-9694498e24c3",
+						"type": "text/javascript",
+						"exec": [
+							"eval(pm.variables.get('initRequest')); // Defined in collection pre-request script"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e68db874-f758-4e31-b73e-f733cd3b6721",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Response from UDP: 200 OK', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var resp = pm.expect(pm.response);",
+							"",
+							"pm.test('Response: OK to process', function () { ",
+							"    resp.ok;",
+							"    resp.header('content-type');",
+							"    ",
+							"    // FIXME: UDP should return content type \"application/json\"!  See: http://jibbering.com/blog/?p=514",
+							"    pm.expect(pm.response.headers.get('content-type')).match(/^text\\/html/i);",
+							"    resp.json; // Shouldn't this fail because real JSON requires content type \"application/json\"?",
+							"});",
+							"",
+							"",
+							"pm.test('UDP accepted LC event in \"Gold\" queue', function() {",
+							"    var eventId = pm.globals.get('eventId');",
+							"    var udpQueueName = 'STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev';",
+							"    resp.jsonBody(eventId + '.' + udpQueueName);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(parseInt(jsonData[eventId][udpQueueName], 10)).gt(40096419239401);",
+							"});",
+							"",
+							"//header for BQ Api call",
+							"var gcp_token = pm.environment.get(\"gcp_token\");",
+							"var Header = require('postman-collection').Header,",
+							"    headerString = 'Content-Type: application/json\\nAuthorization: Bearer '+gcp_token+'\\n';",
+							"var rawHeaders = Header.parse(headerString);",
+							"var jsonData = pm.response.json();",
+							"var uuid_res=Object.keys(jsonData)[0];",
+							"var bq = Object.keys(jsonData)[0].split(\":\")[2];",
+							"// var bq = \"9eda84a3-79d0-47aa-b868-0be6dc2143f3\";",
+							"let query = \"select * from learning_datasets.enriched_events where id = \"+\"'\"+bq+\"'\";",
+							"        ",
+							"//request variables",
+							"const postReq = {",
+							"  url: 'https://www.googleapis.com/bigquery/v2/projects/unizin-udp-data-umich-dev/queries',",
+							"  method: 'POST',",
+							"  header: rawHeaders,",
+							"  body: {",
+							"    mode: 'raw',",
+							"    raw: JSON.stringify({",
+							"    \"query\": query",
+							"   })",
+							"  }",
+							"};",
+							"",
+							"console.log('Sleep for 32 sec before BQ call');",
+							"delayRequestToBigQuery();",
+							"",
+							"// This step is importance as event will endup in Bigquery ~30sec so we query the BQ after 30 sec",
+							"function delayRequestToBigQuery() {",
+							"    setTimeout(function () {",
+							"        pm.sendRequest(postReq, function (err, res) {",
+							"            console.log(err ? err : res.json());",
+							"            pm.test('Response from BQ: 200 OK', function () {",
+							"               pm.expect(res).to.have.property('code', 200);",
+							"               pm.expect(res).to.have.property('status', 'OK');",
+							"            });",
+							"            pm.test(\"Content type from BQ: JSON\", function () {",
+							"                pm.expect(res.headers.get('content-type')).match(/^application\\/json/i);",
+							"    ",
+							"            });",
+							"            pm.test(\"Event found in BQ under 30 sec\", function () {",
+							"                pm.expect((res.json().rows[0].f[0].v)).to.equal(bq);",
+							"            });",
+							"        ",
+							"        });",
+							"    }, 30000);",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sensor\": \"leccap_caliper_postman\",\n  \"sendTime\": \"{{timestampUtcIso8601}}\",\n  \"dataVersion\": \"http://purl.imsglobal.org/ctx/caliper/v1p1\",\n  \"data\": [\n    {\n  \"@context\": \"http://purl.imsglobal.org/ctx/caliper/v1p1\",\n  \"id\": \"{{eventId}}\",\n  \"type\": \"SessionEvent\",\n  \"actor\": \"https://mcommunity.umich.edu/#profile:{{udp_uniqname}}\",\n  \"action\": \"LoggedIn\",\n  \"object\": \"https://leccap-beta.engin.umich.edu/#applicationName=Lecture+Capture\",\n  \"eventTime\": \"{{timestampUtcIso8601}}\",\n  \"edApp\": \"https://leccap-beta.engin.umich.edu/#applicationName=Lecture+Capture\",\n  \"group\": {\n    \"academicSession\": \"w18\",\n    \"courseNumber\": \"MFG 599\",\n    \"dateCreated\": \"2013-08-06T17:33:14.000Z\",\n    \"id\": \"https://leccap-beta.engin.umich.edu/leccap/site/i8nnmrgfvqkmcyq8wps#type=CourseOffering\",\n    \"name\": \"Engineering test course\",\n    \"type\": \"CourseOffering\"\n  },\n  \"membership\": {\n    \"id\": \"https://leccap-beta.engin.umich.edu/leccap/site/i8nnmrgfvqkmcyq8wps#type=Membership&member={{udp_uniqname}}\",\n    \"member\": \"https://mcommunity.umich.edu/#profile:{{udp_uniqname}}\",\n    \"organization\": \"https://leccap-beta.engin.umich.edu/leccap/site/i8nnmrgfvqkmcyq8wps#type=CourseOffering\",\n    \"roles\": [\n      \"Learner\"\n    ],\n    \"status\": \"Active\",\n    \"type\": \"Membership\"\n  },\n  \"session\": {\n    \"id\": \"urn:session-id-localized:leccap-beta.engin.umich.edu/44l9rs836ckb6ql21ldvhrmku1\",\n    \"startedAtTime\": \"{{timestampUtcIso8601}}\",\n    \"type\": \"Session\",\n    \"user\": \"https://mcommunity.umich.edu/#profile:{{udp_uniqname}}\"\n  },\n  \"federatedSession\": {\n    \"id\": \"urn:session-id-localized:leccap-beta.engin.umich.edu/lti/oauth_nonce/5a81e2eb557427.65333446\",\n    \"messageParameters\": {\n      \"custom_canvas_course_id\": \"211644\",\n      \"custom_canvas_user_id\": \"151503\",\n      \"lis_course_offering_sourcedid\": \"{{udp_lis_course_offering_sourcedid}}\",\n      \"lis_person_sourcedid\": \"{{udp_lis_person_sourcedid}}\",\n      \"resource_link_id\": \"43814f5790e0379119130a37450d6d126a70b2c1\"\n    },\n    \"type\": \"LtiSession\",\n    \"user\": \"https://mcommunity.umich.edu/#profile:{{udp_uniqname}}\"\n  }\n}\n  ]\n}\n"
+				},
+				"url": {
+					"raw": "https://unizin-udp-data-umich-dev.appspot.com/",
+					"protocol": "https",
+					"host": [
+						"unizin-udp-data-umich-dev",
+						"appspot",
+						"com"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Requires Postman environment keys:\n* udp_token\n* udp_uniqname\n* udp_lis_course_offering_sourcedid\n* udp_lis_person_sourcedid"
+			},
+			"response": [
+				{
+					"id": "13d9e82e-67dc-4ebd-8c40-82e4f586d334",
+					"name": "Ex. 1: SessionEvent, LoggedIn",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sensor\": \"leccap_caliper_postman\",\n  \"sendTime\": \"{{timestampUtcIso8601}}\",\n  \"dataVersion\": \"http://purl.imsglobal.org/ctx/caliper/v1p1\",\n  \"data\": [\n    {\n  \"@context\": \"http://purl.imsglobal.org/ctx/caliper/v1p1\",\n  \"id\": \"{{eventId}}\",\n  \"type\": \"SessionEvent\",\n  \"actor\": \"https://mcommunity.umich.edu/#profile:{{udp_uniqname}}\",\n  \"action\": \"LoggedIn\",\n  \"object\": \"https://leccap-beta.engin.umich.edu/#applicationName=Lecture+Capture\",\n  \"eventTime\": \"{{timestampUtcIso8601}}\",\n  \"edApp\": \"https://leccap-beta.engin.umich.edu/#applicationName=Lecture+Capture\",\n  \"group\": {\n    \"academicSession\": \"w18\",\n    \"courseNumber\": \"MFG 599\",\n    \"dateCreated\": \"2013-08-06T17:33:14.000Z\",\n    \"id\": \"https://leccap-beta.engin.umich.edu/leccap/site/i8nnmrgfvqkmcyq8wps#type=CourseOffering\",\n    \"name\": \"Engineering test course\",\n    \"type\": \"CourseOffering\"\n  },\n  \"membership\": {\n    \"id\": \"https://leccap-beta.engin.umich.edu/leccap/site/i8nnmrgfvqkmcyq8wps#type=Membership&member={{udp_uniqname}}\",\n    \"member\": \"https://mcommunity.umich.edu/#profile:{{udp_uniqname}}\",\n    \"organization\": \"https://leccap-beta.engin.umich.edu/leccap/site/i8nnmrgfvqkmcyq8wps#type=CourseOffering\",\n    \"roles\": [\n      \"Learner\"\n    ],\n    \"status\": \"Active\",\n    \"type\": \"Membership\"\n  },\n  \"session\": {\n    \"id\": \"urn:session-id-localized:leccap-beta.engin.umich.edu/44l9rs836ckb6ql21ldvhrmku1\",\n    \"startedAtTime\": \"{{timestampUtcIso8601}}\",\n    \"type\": \"Session\",\n    \"user\": \"https://mcommunity.umich.edu/#profile:{{udp_uniqname}}\"\n  },\n  \"federatedSession\": {\n    \"id\": \"urn:session-id-localized:leccap-beta.engin.umich.edu/lti/oauth_nonce/5a81e2eb557427.65333446\",\n    \"messageParameters\": {\n      \"custom_canvas_course_id\": \"211644\",\n      \"custom_canvas_user_id\": \"151503\",\n      \"lis_course_offering_sourcedid\": \"{{udp_lis_course_offering_sourcedid}}\",\n      \"lis_person_sourcedid\": \"{{udp_lis_person_sourcedid}}\",\n      \"resource_link_id\": \"43814f5790e0379119130a37450d6d126a70b2c1\"\n    },\n    \"type\": \"LtiSession\",\n    \"user\": \"https://mcommunity.umich.edu/#profile:{{udp_uniqname}}\"\n  }\n}\n  ]\n}\n"
+						},
+						"url": {
+							"raw": "https://unizin-udp-data-umich-dev.appspot.com/",
+							"protocol": "https",
+							"host": [
+								"unizin-udp-data-umich-dev",
+								"appspot",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Content-Encoding",
+							"value": "gzip",
+							"type": "text",
+							"enabled": true,
+							"name": "Content-Encoding",
+							"description": ""
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8",
+							"type": "text",
+							"enabled": true,
+							"name": "Content-Type",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"urn:uuid:654e4d31-e56d-45cc-9661-deb323080f7a\": {\"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"39447962165063\"}}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{udp_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5dca8aaa-9102-4b9a-afc4-4e38ae5bbe12",
+				"type": "text/javascript",
+				"exec": [
+					"// Postman (v5.5.3) doesn't pass definitions from collection to folder to request.",
+					"// To get unique values (timestamp, ID, etc.) in each request, define them here.",
+					"// Then in the request's pre-request script, use:",
+					"//      eval(pm.variables.get('initRequest'));",
+					"function initRequest() {",
+					"    pm.globals.set('timestampUtcIso8601', (new Date()).toISOString());",
+					"    pm.globals.set('randomString', Math.random().toString(26).substring(2).replace(/[0-9]/g, c => 'qrstuvwxyz'[c]));",
+					"",
+					"    var uuid = require('uuid');",
+					"    pm.globals.set('eventId', 'urn:uuid:' + uuid.v4());",
+					"}",
+					"pm.globals.set(initRequest.name, initRequest.toString() + initRequest.name + '()');",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "42eee30c-559d-4d33-abb9-64aa5bcccceb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
