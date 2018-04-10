@@ -42,6 +42,7 @@ the "Bulk Edit" link near the right side.
     udp_uniqname:test_user_uniqname_here
     udp_lis_course_offering_sourcedid:test_course_SIS_ID
     udp_lis_person_sourcedid:test_user_SIS_ID
+    gcp_token:authorization_token
     ```
     
     Replace the values as appropriate.  Ideally, the test user uniqname
@@ -139,3 +140,41 @@ environment variable file:
     **_Note_**:  Unlike typical CLI programs, `newman` requires the name
     of the input file (`udp.postman_collection.json`) **_before_** the
     options (`-g` and `-e`).
+    
+## GCP Authorization token generation
+
+1. Start a terminal window and install Google-cloud-SDK (https://cloud.google.com/sdk/docs/quickstart-macos)
+ 1. to install Google cloud SDK the important step to follow  is `Before you Begin` list.
+    1. test if gcloud is installed or not something as below
+         ```
+         08:11:26-user1~$ gcloud --version
+         Google Cloud SDK 192.0.0
+         bq 2.0.29
+         core 2018.03.02
+         gsutil 4.28
+        ```  
+2. grab the service-account file from Unizin (https://umich.app.box.com/notes/273806901933) give it `your-fav-file-name.json` 
+   and put it a directory as you wish
+3. Set an environment variable: `export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"`
+4. start a new terminal to pick up the service account generate OAuth token with `token_generator.sh` script as shown below. 
+   The token is good for one hour.
+   
+         08:22:59-user~/src/myprojects/gcp$ ./token_generator.sh
+        
+           ya29.c.YYYYyyeyeyeyeyeyeyeyeYYYYYyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+            
+5. Alternatively you can grab the token from command line using
+ `GOOGLE_APPLICATION_CREDENTIALS=~/<path-to-service-accout.json> gcloud auth application-default print-access-token`
+   
+
+5. Grab the `access token` value from above and place it in the environmental variables `gcp_token` in the Postman along with others.
+
+Token generation set up process is a seperate process from running the Postman script and token expire in 1hour so you have to generate the token again. 
+I am trying to figured out a way to tie the service account.json file with postman for making the token generation process automatic so I will keep looking.
+
+## importing Environmental variable file
+Postman provides an easy way to import the enviromental variables that are used by Postman when making the API call. Here the steps to do it
+1. Click on the "Manage Environments" button with a gear icon (⚙️) is located in the upper right corner of the main Postman window, 
+2. Click on the `import` button on the pop-up window, that will ask to upload a file choose the file the file `udp-ststvii.postman_environment.json`
+3. add `udp_token` and `gcp_token` values
+
