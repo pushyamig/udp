@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "95901fa9-c312-406e-98f5-3afd45372f83",
     "name": "udp",
-    "description": "# Requests and tests for Unizin Data Platform (UDP)\n\nAuthor: TL Developers (its.tl.dev@umich.edu)\n\nRequires Postman environment keys:\n* udp_token\n",
+    "description": "# Requests and tests for Unizin Data Platform (UDP)\n\nAuthor: T&L Developers (its.tl.dev@umich.edu)\n\nRequires Postman environment keys:\n* udp_token\n",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -119,7 +119,7 @@
           },
           "response": [
             {
-              "id": "539a4f1b-3639-4280-9708-0b7e47de7c9f",
+              "id": "152541e4-7987-4dee-80e8-9b34ce207dd2",
               "name": "Ex. 1: SessionEvent, LoggedIn",
               "originalRequest": {
                 "method": "POST",
@@ -178,7 +178,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "4500f455-cc1e-4232-b59e-b5ce492fd2de",
+                "id": "a610e877-c1c3-4e73-9cc8-9000b353e128",
                 "type": "text/javascript",
                 "exec": [
                   "var resp = pm.response;",
@@ -199,38 +199,47 @@
                   "var bq = pm.environment.get(\"bq\");",
                   "var gtBQCheck = \"Event with Id \\\"{0}\\\" found in BQ under 30 sec\".format(bq);",
                   "var bqRes = resp.json();",
-                  "var tableRows = bqRes.rows[0];",
-                  "",
-                  "pm.test(gtBQCheck, function () {",
-                  "    var tableId=tableRows.f[0].v;",
-                  "    pm.expect((tableId)).to.equal(bq);",
+                  "var totRows=bqRes.totalRows;",
+                  "// if 0 rows returned then event is not found in the BQ",
+                  "if(totRows === \"0\"){",
+                  "    pm.test(gtBQCheck, function () {",
+                  "        pm.expect(parseInt(totRows, 10)).gt(0);",
                   "});",
-                  "",
-                  "var gtBQEnrichmentCheck = \"Event with Id \\\"{0}\\\"is enriched\".format(bq);",
-                  "var edAppColPosi;",
-                  "var ucdmCourseOfferingIdColumPosi;",
-                  "var ucdmActorIdColPosi;",
-                  "var bqColumnValues=bqRes.schema.fields;",
-                  "for(i=0;i<bqColumnValues.length;i++){",
-                  "    if(bqColumnValues[i].name ===\"ed_app\"){",
-                  "        edAppColPosi=i;",
-                  "    }",
-                  "    if(bqColumnValues[i].name ===\"ucdm_course_offering_id\"){",
-                  "        ucdmCourseOfferingIdColumPosi=i;",
-                  "    }",
-                  "    if(bqColumnValues[i].name ===\"ucdm_actor_id\"){",
-                  "        ucdmActorIdColPosi=i;",
-                  "    }",
-                  "}",
-                  "var edAppValue=tableRows.f[edAppColPosi].v;",
-                  "var ucdmCourseOfferingIdValue=tableRows.f[ucdmCourseOfferingIdColumPosi].v;",
-                  "var ucdmActorIdValue=tableRows.f[ucdmActorIdColPosi].v;",
-                  "pm.test(gtBQEnrichmentCheck,function(){",
-                  "    pm.expect((edAppValue)).to.equal('https://leccap-beta.engin.umich.edu/#applicationName=Lecture+Capture');",
-                  "    pm.expect((ucdmCourseOfferingIdValue)).to.equal(\"8\");",
-                  "    pm.expect((ucdmActorIdValue)).to.equal(\"3922353\");",
+                  "// event is anticipated to be found and below test will justify that",
+                  "}else{",
+                  "    var tableRows = bqRes.rows[0];",
                   "    ",
-                  "});"
+                  "    pm.test(gtBQCheck, function () {",
+                  "        var tableId=tableRows.f[0].v;",
+                  "        pm.expect((tableId)).to.equal(bq);",
+                  "    });",
+                  "    ",
+                  "    var gtBQEnrichmentCheck = \"Event with Id \\\"{0}\\\"is enriched\".format(bq);",
+                  "    var edAppColPosi;",
+                  "    var ucdmCourseOfferingIdColumPosi;",
+                  "    var ucdmActorIdColPosi;",
+                  "    var bqColumnValues=bqRes.schema.fields;",
+                  "    for(i=0;i<bqColumnValues.length;i++){",
+                  "        if(bqColumnValues[i].name ===\"ed_app\"){",
+                  "            edAppColPosi=i;",
+                  "        }",
+                  "        if(bqColumnValues[i].name ===\"ucdm_course_offering_id\"){",
+                  "            ucdmCourseOfferingIdColumPosi=i;",
+                  "        }",
+                  "        if(bqColumnValues[i].name ===\"ucdm_actor_id\"){",
+                  "            ucdmActorIdColPosi=i;",
+                  "        }",
+                  "    }",
+                  "    var edAppValue=tableRows.f[edAppColPosi].v;",
+                  "    var ucdmCourseOfferingIdValue=tableRows.f[ucdmCourseOfferingIdColumPosi].v;",
+                  "    var ucdmActorIdValue=tableRows.f[ucdmActorIdColPosi].v;",
+                  "    pm.test(gtBQEnrichmentCheck,function(){",
+                  "        pm.expect((edAppValue)).to.equal('https://leccap-beta.engin.umich.edu/#applicationName=Lecture+Capture');",
+                  "        pm.expect((ucdmCourseOfferingIdValue)).to.equal(\"8\");",
+                  "        pm.expect((ucdmActorIdValue)).to.equal(\"3922353\");",
+                  "        ",
+                  "    });",
+                  "}"
                 ]
               }
             }
@@ -533,7 +542,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "2b3ea1a2-9ae7-4144-9dc4-3b7d4c2ebd26",
+                "id": "024e064b-c977-432b-92d2-23aee8a97242",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Response from Bucket Storage Object: 200 OK', function () {",
@@ -543,10 +552,7 @@
                   "var resp = pm.expect(pm.response);",
                   "",
                   "pm.test('Response is Octet-Stream: OK to process', function () { ",
-                  "    // resp.ok;",
-                  "    // resp.header('content-type');",
                   "    pm.expect(pm.response.headers.get('content-type')).match(/^application\\/octet-stream/i);",
-                  "    // resp.json; ",
                   "});",
                   "var eventID = pm.globals.get('eventId');",
                   "var foundId = (pm.response.text().includes(eventID))?\"true\":\"false\";",
@@ -583,9 +589,7 @@
                   "    });",
                   "}",
                   "",
-                  "",
-                  "",
-                  "pm.environment.unset(\"variable_key\");"
+                  ""
                 ]
               }
             }
@@ -727,7 +731,7 @@
               },
               "response": [
                 {
-                  "id": "81dfee3a-8b2c-4796-b61e-2eb68aa765c2",
+                  "id": "85ac1cc2-68d7-4a3d-816a-1a36f97d13b5",
                   "name": "Case 1: Pass",
                   "originalRequest": {
                     "method": "POST",
@@ -877,7 +881,7 @@
               },
               "response": [
                 {
-                  "id": "18356660-09b9-42ed-bff8-0e706d1f448f",
+                  "id": "f3bb5dcf-b4b8-4780-8fea-3e9079fd02f4",
                   "name": "Case 2: Pass",
                   "originalRequest": {
                     "method": "POST",
@@ -1028,7 +1032,7 @@
               },
               "response": [
                 {
-                  "id": "04761593-fdc1-41ac-b54b-1cdb29eb42f0",
+                  "id": "4fa19aa1-1626-4b51-bda4-b763631f656d",
                   "name": "case 3: Pass",
                   "originalRequest": {
                     "method": "POST",
@@ -1307,7 +1311,7 @@
                   },
                   "response": [
                     {
-                      "id": "963130dd-8a8c-44a1-a676-723ef4449914",
+                      "id": "f6fd3dda-0743-4852-93d9-66f2781560ef",
                       "name": "Case 1: Pass",
                       "originalRequest": {
                         "method": "POST",
@@ -1392,7 +1396,7 @@
                       "body": "{\n  \"accepted_events\": [\n    {\n      \"id\": \"urn:uuid:f22c1e79-c5d5-44c9-9101-ecc540b37b2e\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66529804005722\"\n      }\n    }, \n    {\n      \"id\": \"urn:uuid:eafb0d25-791a-45b7-8c68-89e268f45fdc\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66532727767125\"\n      }\n    }, \n    {\n      \"id\": \"urn:uuid:683169a8-5eee-4c20-b132-60864368ea5f\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66528132481049\"\n      }\n    }, \n    {\n      \"id\": \"urn:uuid:5b51392d-c806-4b9b-b61c-188aece0ddd1\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66528500876488\"\n      }\n    }, \n    {\n      \"id\": \"urn:uuid:26e4434f-b4a4-4ae1-b910-38c9cb0165e2\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66528232635189\"\n      }\n    }\n  ]\n}\n"
                     },
                     {
-                      "id": "30a6a6f2-6fc0-43b6-8350-9ae7c88a1fa3",
+                      "id": "4e941ee9-30b3-4c9a-92dd-93ead164897a",
                       "name": "Case 2: pass",
                       "originalRequest": {
                         "method": "POST",
@@ -1465,7 +1469,7 @@
                       "body": "{\n  \"accepted_events\": [\n    {\n      \"id\": \"urn:uuid:5b44a24b-f40a-4c43-9774-8160f7eef7d6\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66524842439276\"\n      }\n    }, \n    {\n      \"id\": \"urn:uuid:3e1eb4d4-8bf6-4ad6-a7b4-88b4fd8f83a5\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66532239206224\"\n      }\n    }, \n    {\n      \"id\": \"urn:uuid:95257649-ab28-47b5-9e25-9b35f18e838b\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66521279176853\"\n      }\n    }, \n    {\n      \"id\": \"urn:uuid:a51e10a1-4d79-4c88-ae98-697a9bdecb7d\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66529742710422\"\n      }\n    }\n  ], \n  \"errors\": {\n    \"events\": [\n      {\n        \"errors\": [\n          \"Event `actor` attribute must an object or string.\"\n        ], \n        \"id\": \"urn:uuid:f70b4550-4bd0-47e8-8e37-748860181c00\", \n        \"index\": 4\n      }\n    ]\n  }\n}\n"
                     },
                     {
-                      "id": "817ad34d-1e44-4130-bec2-4bb1458e42ca",
+                      "id": "8c3364bc-c298-4542-b0a9-987ef9b8e28f",
                       "name": "Case 3: Pass",
                       "originalRequest": {
                         "method": "POST",
@@ -1557,7 +1561,7 @@
                     {
                       "listen": "test",
                       "script": {
-                        "id": "9cdb90b6-bfb3-4b17-9a5e-525211d79dfd",
+                        "id": "94e7d439-6b5d-4bcc-9854-6fbe24967565",
                         "type": "text/javascript",
                         "exec": [
                           "var resp = pm.response;",
@@ -1576,13 +1580,22 @@
                           "});",
                           "var bq = pm.environment.get(\"bq\");",
                           "var gtBQCheck = \"Event with Id \\\"{0}\\\" found in BQ under 30 sec\".format(bq);",
+                          "var bqRes = resp.json();",
+                          "var totRows=bqRes.totalRows;",
+                          "// if 0 rows returned then event is not found in the BQ",
+                          "if(totRows === \"0\"){",
+                          "    pm.test(gtBQCheck, function () {",
+                          "        pm.expect(parseInt(totRows, 10)).gt(0);",
+                          "});",
+                          "// event is anticipated to be found and below test will justify that",
+                          "}else{",
                           "",
-                          "pm.test(gtBQCheck, function () {",
-                          "    var bqRes = resp.json();",
-                          "    var tableRows = bqRes.rows[0];",
-                          "    var tableId=tableRows.f[0].v;",
-                          "    pm.expect((tableId)).to.equal(bq);",
-                          "});"
+                          "    pm.test(gtBQCheck, function () {",
+                          "        var tableRows = bqRes.rows[0];",
+                          "        var tableId=tableRows.f[0].v;",
+                          "        pm.expect((tableId)).to.equal(bq);",
+                          "    });",
+                          "}"
                         ]
                       }
                     }
@@ -1634,7 +1647,7 @@
                     {
                       "listen": "test",
                       "script": {
-                        "id": "9cdb90b6-bfb3-4b17-9a5e-525211d79dfd",
+                        "id": "b5f29264-4f4e-4249-a21d-6bac60d21cc0",
                         "type": "text/javascript",
                         "exec": [
                           "var resp = pm.response;",
@@ -1654,12 +1667,22 @@
                           "var bq = pm.environment.get(\"bq\");",
                           "var gtBQCheck = \"Event with Id \\\"{0}\\\" found in BQ under 30 sec\".format(bq);",
                           "",
-                          "pm.test(gtBQCheck, function () {",
-                          "    var bqRes = resp.json();",
-                          "    var tableRows = bqRes.rows[0];",
-                          "    var tableId=tableRows.f[0].v;",
-                          "    pm.expect((tableId)).to.equal(bq);",
-                          "});"
+                          "var bqRes = resp.json();",
+                          "var totRows=bqRes.totalRows;",
+                          "// if 0 rows returned then event is not found in the BQ",
+                          "if(totRows === \"0\"){",
+                          "    pm.test(gtBQCheck, function () {",
+                          "        pm.expect(parseInt(totRows, 10)).gt(0);",
+                          "});",
+                          "// event is anticipated to be found and below test will justify that",
+                          "}else{",
+                          "",
+                          "    pm.test(gtBQCheck, function () {",
+                          "        var tableRows = bqRes.rows[0];",
+                          "        var tableId=tableRows.f[0].v;",
+                          "        pm.expect((tableId)).to.equal(bq);",
+                          "    });",
+                          "}"
                         ]
                       }
                     },
@@ -1722,7 +1745,7 @@
                     {
                       "listen": "test",
                       "script": {
-                        "id": "9cdb90b6-bfb3-4b17-9a5e-525211d79dfd",
+                        "id": "3f1ef6be-d109-4992-81db-d071f780267e",
                         "type": "text/javascript",
                         "exec": [
                           "var resp = pm.response;",
@@ -1742,12 +1765,22 @@
                           "var bq = pm.environment.get(\"bq\");",
                           "var gtBQCheck = \"Event with Id \\\"{0}\\\" found in BQ under 30 sec\".format(bq);",
                           "",
-                          "pm.test(gtBQCheck, function () {",
-                          "    var bqRes = resp.json();",
-                          "    var tableRows = bqRes.rows[0];",
-                          "    var tableId=tableRows.f[0].v;",
-                          "    pm.expect((tableId)).to.equal(bq);",
-                          "});"
+                          "var bqRes = resp.json();",
+                          "var totRows=bqRes.totalRows;",
+                          "// if 0 rows returned then event is not found in the BQ",
+                          "if(totRows === \"0\"){",
+                          "    pm.test(gtBQCheck, function () {",
+                          "        pm.expect(parseInt(totRows, 10)).gt(0);",
+                          "});",
+                          "// event is anticipated to be found and below test will justify that",
+                          "}else{",
+                          "",
+                          "    pm.test(gtBQCheck, function () {",
+                          "        var tableRows = bqRes.rows[0];",
+                          "        var tableId=tableRows.f[0].v;",
+                          "        pm.expect((tableId)).to.equal(bq);",
+                          "    });",
+                          "}"
                         ]
                       }
                     },
@@ -1810,7 +1843,7 @@
                     {
                       "listen": "test",
                       "script": {
-                        "id": "9cdb90b6-bfb3-4b17-9a5e-525211d79dfd",
+                        "id": "c53df3cd-949f-4422-9ad2-eac9f1a234c1",
                         "type": "text/javascript",
                         "exec": [
                           "var resp = pm.response;",
@@ -1830,12 +1863,22 @@
                           "var bq = pm.environment.get(\"bq\");",
                           "var gtBQCheck = \"Event with Id \\\"{0}\\\" found in BQ under 30 sec\".format(bq);",
                           "",
-                          "pm.test(gtBQCheck, function () {",
-                          "    var bqRes = resp.json();",
-                          "    var tableRows = bqRes.rows[0];",
-                          "    var tableId=tableRows.f[0].v;",
-                          "    pm.expect((tableId)).to.equal(bq);",
-                          "});"
+                          "var bqRes = resp.json();",
+                          "var totRows=bqRes.totalRows;",
+                          "// if 0 rows returned then event is not found in the BQ",
+                          "if(totRows === \"0\"){",
+                          "    pm.test(gtBQCheck, function () {",
+                          "        pm.expect(parseInt(totRows, 10)).gt(0);",
+                          "});",
+                          "// event is anticipated to be found and below test will justify that",
+                          "}else{",
+                          "",
+                          "    pm.test(gtBQCheck, function () {",
+                          "        var tableRows = bqRes.rows[0];",
+                          "        var tableId=tableRows.f[0].v;",
+                          "        pm.expect((tableId)).to.equal(bq);",
+                          "    });",
+                          "}"
                         ]
                       }
                     },
@@ -1898,7 +1941,7 @@
                     {
                       "listen": "test",
                       "script": {
-                        "id": "9cdb90b6-bfb3-4b17-9a5e-525211d79dfd",
+                        "id": "0b5f6c57-fa42-4665-a9ed-169e24f626c0",
                         "type": "text/javascript",
                         "exec": [
                           "var resp = pm.response;",
@@ -1918,12 +1961,22 @@
                           "var bq = pm.environment.get(\"bq\");",
                           "var gtBQCheck = \"Event with Id \\\"{0}\\\" found in BQ under 30 sec\".format(bq);",
                           "",
-                          "pm.test(gtBQCheck, function () {",
-                          "    var bqRes = resp.json();",
-                          "    var tableRows = bqRes.rows[0];",
-                          "    var tableId=tableRows.f[0].v;",
-                          "    pm.expect((tableId)).to.equal(bq);",
-                          "});"
+                          "var bqRes = resp.json();",
+                          "var totRows=bqRes.totalRows;",
+                          "// if 0 rows returned then event is not found in the BQ",
+                          "if(totRows === \"0\"){",
+                          "    pm.test(gtBQCheck, function () {",
+                          "        pm.expect(parseInt(totRows, 10)).gt(0);",
+                          "});",
+                          "// event is anticipated to be found and below test will justify that",
+                          "}else{",
+                          "",
+                          "    pm.test(gtBQCheck, function () {",
+                          "        var tableRows = bqRes.rows[0];",
+                          "        var tableId=tableRows.f[0].v;",
+                          "        pm.expect((tableId)).to.equal(bq);",
+                          "    });",
+                          "}"
                         ]
                       }
                     },
@@ -2092,7 +2145,7 @@
                   },
                   "response": [
                     {
-                      "id": "fa63d20c-1167-4885-97df-3d648de34508",
+                      "id": "79bd0e91-ff2a-4ccd-99ec-d6cb8694a49a",
                       "name": "Case 2: pass",
                       "originalRequest": {
                         "method": "POST",
@@ -2265,7 +2318,7 @@
           },
           "response": [
             {
-              "id": "65b1efe4-c462-40f7-8c55-fbe4c77c76ce",
+              "id": "9f19f8f1-ef39-4a9d-b579-19346cceeda5",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -2351,6 +2404,29 @@
                   "eval(pm.variables.get('initRequest')); // Defined in collection pre-request script"
                 ]
               }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "c9b9fdd8-31de-426e-aeb9-a8dbfb53ffcf",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Response from UDP: 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "var resp = pm.expect(pm.response);",
+                  "",
+                  "pm.test('Response is JSON: OK to process', function () { ",
+                  "    resp.ok;",
+                  "    resp.header('content-type');",
+                  "    pm.expect(pm.response.headers.get('content-type')).match(/^application\\/json/i);",
+                  "    resp.json; ",
+                  "});",
+                  "",
+                  ""
+                ]
+              }
             }
           ],
           "request": {
@@ -2391,7 +2467,7 @@
           },
           "response": [
             {
-              "id": "653e5bdc-4f52-40ef-b975-a642c02eff2c",
+              "id": "8a220e91-301c-47e1-88d7-0721230cca2e",
               "name": "Fail",
               "originalRequest": {
                 "method": "POST",
@@ -2551,7 +2627,7 @@
           },
           "response": [
             {
-              "id": "778cf80f-c417-4389-966f-132fb815dcd9",
+              "id": "98fa4429-7fe4-4a00-a709-6789f5d8d994",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -2703,7 +2779,7 @@
           },
           "response": [
             {
-              "id": "20ca556e-2f86-45b6-96cf-164a0ac723ff",
+              "id": "0bfd0b3a-7c7a-4e8e-8f55-437fc9d3e68e",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -2851,7 +2927,7 @@
           },
           "response": [
             {
-              "id": "98835779-38ed-482d-b83b-ec510bab4d1b",
+              "id": "6bef44c4-1a25-4aa1-a773-1a25661b088b",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -3012,7 +3088,7 @@
           },
           "response": [
             {
-              "id": "5f45b7eb-da11-4d63-b5c9-276f7c75d724",
+              "id": "250f7ea4-d13b-41d5-b171-dbbe4202c9ef",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -3180,7 +3256,7 @@
           },
           "response": [
             {
-              "id": "7458323e-745f-4b52-bef2-bc4e0c86003b",
+              "id": "0c0526be-2b44-4fbc-b10f-26da74e2dacc",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -3331,7 +3407,7 @@
           },
           "response": [
             {
-              "id": "38323f5b-6acb-422b-9ad1-74e2fb256506",
+              "id": "53aca70b-3dd2-4c3e-a357-3d8b470e2fa2",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -3479,7 +3555,7 @@
           },
           "response": [
             {
-              "id": "8298b191-5b4e-4011-98d0-3b5a5be0a296",
+              "id": "20fdc460-4518-4d99-948d-457f8b97ce1c",
               "name": "Case 1 : Pass",
               "originalRequest": {
                 "method": "POST",
@@ -3552,7 +3628,7 @@
               "body": "{\n  \"errors\": {\n    \"envelope\": [\n      \"Event envelope `dataVersion` attribute must be a version like \\\"http://purl.imsglobal.org/ctx/caliper/v1p1\\\".\"\n    ]\n  }\n}\n"
             },
             {
-              "id": "052e36b6-61cc-4312-8dfa-352500aa7392",
+              "id": "9f3b524a-1d52-4e3c-a43b-4452e40e1d2f",
               "name": "Case3 - Accepted",
               "originalRequest": {
                 "method": "POST",
@@ -3637,7 +3713,7 @@
               "body": "{\n  \"accepted_events\": [\n    {\n      \"id\": \"urn:uuid:d8c869e9-09f5-43ba-b179-d5e2ce804b79\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-Silver-dev\": \"66493619429689\"\n      }\n    }\n  ]\n}\n"
             },
             {
-              "id": "2bcfa00c-232a-4bb6-a91f-de8e65356844",
+              "id": "a611b56f-02fb-433c-9b4d-ac47a7402663",
               "name": "Case2 - accepted",
               "originalRequest": {
                 "method": "POST",
@@ -3798,7 +3874,7 @@
           },
           "response": [
             {
-              "id": "49f87449-7416-438d-b921-1e0f1f29939e",
+              "id": "da40837e-c9d8-4336-8538-c46e1a371826",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -3949,7 +4025,7 @@
           },
           "response": [
             {
-              "id": "371420c9-a3ce-4258-9bec-d4b9bacea796",
+              "id": "4086c3e6-29b2-44d1-b03c-da46edf7df32",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -4098,7 +4174,7 @@
           },
           "response": [
             {
-              "id": "4818461e-75b0-4db4-9426-47e51db84059",
+              "id": "c8ba34db-daba-4bea-b7ff-0d7e80f07c44",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -4188,7 +4264,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "b0244bc6-4499-4c89-86bc-afae11758d6d",
+                "id": "96cf1a85-bc06-48e8-ba0b-271589d8bab6",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Response from UDP: 200 OK', function () {",
@@ -4208,7 +4284,7 @@
                   "var parsedData = parseResp(jsonData);",
                   "var bq = parsedData.id;",
                   "// { \"accepted_events\": [ { \"id\": \"urn:uuid:c19b0d64-0f3a-4961-9375-40dc151ec448\", \"topics\": { \"STREAM-unizin-umich-umich-stream-Silver-dev\": \"73034070686350\" } } ] }",
-                  "var gtCheck = \"UDP accepted LC bare minimum event in \\\"silver\\\" queue with id: \\\"{0}\\\" \".format(bq);",
+                  "var gtCheck = \"UDP accepted LC event in \\\"silver\\\" queue with id: \\\"{0}\\\" for varied actor format \".format(bq);",
                   "pm.test(gtCheck, function() {",
                   "    var expectedQName='stream-unizin-umich-umich-stream-silver-'+pm.environment.get(\"env\");",
                   "    var eventId = bq;",
@@ -4241,7 +4317,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sensor\": \"https://example.edu/sensors/1\",\n  \"sendTime\": \"{{timestampUtcIso8601}}\",\n  \"dataVersion\": \"http://purl.imsglobal.org/ctx/caliper/v1p1\",\n  \"data\": [\n    {\n      \"@context\": \"http://purl.imsglobal.org/ctx/caliper/v1p1\",\n      \"id\": \"{{eventId}}\",\n      \"type\": \"MediaEvent\",\n      \"actor\": {\n       \n        \"type\":\"Person\"\n      },\n      \"action\": \"Paused\",\n      \"eventTime\": \"{{timestampUtcIso8601}}\",\n      \"object\": {\n        \"id\": \"https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8\",\n        \"type\": \"VideoObject\",\n        \"name\": \"Lecture recorded on 9/19/2017\",\n        \"dateCreated\": \"2017-10-01T16:08:02.000Z\",\n        \"dateModified\": \"2017-10-01T21:28:59.000Z\",\n        \"duration\": \"PT5099.000S\",\n        \"isPartOf\": {\n          \"id\": \"https://leccap.engin.umich.edu/leccap/site/ziiq5uzrd9k06e6vjew\",\n          \"type\": \"WebPage\",\n          \"name\": \"EECS 370 001 / 002 / 003 / 004\",\n          \"dateCreated\": \"2017-10-01T06:41:17.000Z\"\n        }\n      },\n      \"edApp\": \"https://leccap-beta.engin.umich.edu/#applicationName=Lecture+Capture\"\n    }\n      ]\n    }"
+              "raw": "{\n  \"sensor\": \"https://example.edu/sensors/1\",\n  \"sendTime\": \"{{timestampUtcIso8601}}\",\n  \"dataVersion\": \"http://purl.imsglobal.org/ctx/caliper/v1p1\",\n  \"data\": [\n    {\n      \"@context\": \"http://purl.imsglobal.org/ctx/caliper/v1p1\",\n      \"id\": \"{{eventId}}\",\n      \"type\": \"MediaEvent\",\n      \"actor\": {\n        \"id\": \"https://mcommunity.umich.edu/#profile:{{udp_uniqname}}\",\n        \"type\":\"Person\"\n      },\n      \"action\": \"Paused\",\n      \"eventTime\": \"{{timestampUtcIso8601}}\",\n      \"object\": {\n        \"id\": \"https://leccap.engin.umich.edu/leccap/viewer/r/woNYn8\",\n        \"type\": \"VideoObject\",\n        \"name\": \"Lecture recorded on 9/19/2017\",\n        \"dateCreated\": \"2017-10-01T16:08:02.000Z\",\n        \"dateModified\": \"2017-10-01T21:28:59.000Z\",\n        \"duration\": \"PT5099.000S\",\n        \"isPartOf\": {\n          \"id\": \"https://leccap.engin.umich.edu/leccap/site/ziiq5uzrd9k06e6vjew\",\n          \"type\": \"WebPage\",\n          \"name\": \"EECS 370 001 / 002 / 003 / 004\",\n          \"dateCreated\": \"2017-10-01T06:41:17.000Z\"\n        }\n      },\n      \"edApp\": \"https://leccap-beta.engin.umich.edu/#applicationName=Lecture+Capture\"\n    }\n      ]\n    }"
             },
             "url": {
               "raw": "https://umich.caliper.{{env}}.cloud.unizin.org",
@@ -4259,7 +4335,7 @@
           },
           "response": [
             {
-              "id": "0133458e-8fb2-47d8-a329-c34928406411",
+              "id": "c4876170-36e3-4e82-8555-5bf44debcfb6",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -4357,6 +4433,29 @@
                   "eval(pm.variables.get('initRequest')); // Defined in collection pre-request script"
                 ]
               }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "dcbd0ba7-2c84-4233-96d4-96a512edceaa",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Response from UDP for invalid caplier version: 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Error Response is of type JSON', function () { ",
+                  "    pm.response.to.have.header(\"Content-Type\");",
+                  "    pm.expect(pm.response.headers.get('Content-type')).match(/^application\\/json/i);",
+                  "});",
+                  "",
+                  "// { \"errors\": { \"events\": [ { \"errors\": [ \"Event `actor` attribute must an object or string.\" ], \"id\": \"urn:uuid:7910b297-60fe-458a-962c-41e5aeffc9d4\", \"index\": 0 } ] } }",
+                  "pm.test(\"Reponse Body contains correct missing \\\"actor\\\" information for event payload\", function () {",
+                  "    pm.expect(pm.response.text()).to.include(pm.globals.get('eventId'));",
+                  "    pm.expect(pm.response.text()).to.include('actor');",
+                  "});"
+                ]
+              }
             }
           ],
           "request": {
@@ -4397,7 +4496,7 @@
           },
           "response": [
             {
-              "id": "c913d5df-8712-4e31-8b85-b278b0d5be87",
+              "id": "41047c93-9444-4d01-b917-cda102fb1ae4",
               "name": "Fail",
               "originalRequest": {
                 "method": "POST",
@@ -4494,6 +4593,29 @@
                   "eval(pm.variables.get('initRequest')); // Defined in collection pre-request script"
                 ]
               }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "0e04bc1f-632b-4de0-8f8f-ad8ec9da39a2",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Response from UDP for invalid caplier version: 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Error Response is of type JSON', function () { ",
+                  "    pm.response.to.have.header(\"Content-Type\");",
+                  "    pm.expect(pm.response.headers.get('Content-type')).match(/^application\\/json/i);",
+                  "});",
+                  "",
+                  "// { \"errors\": { \"events\": [ { \"errors\": [ \"Event `actor` attribute must an object or string.\" ], \"id\": \"urn:uuid:7910b297-60fe-458a-962c-41e5aeffc9d4\", \"index\": 0 } ] } }",
+                  "pm.test(\"Reponse Body contains correct missing \\\"actor\\\" information for event payload\", function () {",
+                  "    pm.expect(pm.response.text()).to.include(pm.globals.get('eventId'));",
+                  "    pm.expect(pm.response.text()).to.include('actor');",
+                  "});"
+                ]
+              }
             }
           ],
           "request": {
@@ -4534,7 +4656,7 @@
           },
           "response": [
             {
-              "id": "6f613145-f543-4adc-bd3c-3b22f98f75a9",
+              "id": "c6326a5d-24e5-4769-8c60-ee653d8078e8",
               "name": "Fail",
               "originalRequest": {
                 "method": "POST",
@@ -4697,7 +4819,7 @@
           },
           "response": [
             {
-              "id": "7a4a85c4-4f8b-4ea6-99c2-20ef433715cc",
+              "id": "19937a43-680c-4d09-a4e2-e6bc55f245c3",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -4847,7 +4969,7 @@
           },
           "response": [
             {
-              "id": "355b0f71-989b-481f-9c38-6e3923b83ca2",
+              "id": "30c99e93-429d-421e-9593-894e228f952e",
               "name": "Partial Success",
               "originalRequest": {
                 "method": "POST",
@@ -4997,7 +5119,7 @@
           },
           "response": [
             {
-              "id": "a73d9c24-39fd-4292-846f-f3b9fc10f6db",
+              "id": "144dd08f-a60b-42f1-b097-10be085c1a9f",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -5147,7 +5269,7 @@
           },
           "response": [
             {
-              "id": "ec0762d8-5818-467c-89ef-973e13f853e8",
+              "id": "1e16f570-16c5-41ef-8d4b-61dbf609e08d",
               "name": "Case1: Pass",
               "originalRequest": {
                 "method": "POST",
@@ -5220,7 +5342,7 @@
               "body": "{\n  \"errors\": {\n    \"events\": [\n      {\n        \"errors\": [\n          \"Event `eventTime` attribute must be an ISO 8601 time string formated like \\\"yyyy-mm-ddThh:mm:ss.SSSZ\\\".\", \n          \"Event `type` and `action` must be present, and `action` must be valid for `type`.\"\n        ], \n        \"id\": \"urn:uuid:03bd8e93-d0ff-4faa-9e37-7f99c8e918de\", \n        \"index\": 0\n      }\n    ]\n  }\n}\n"
             },
             {
-              "id": "8218d913-6d83-46b4-855f-8271aee23acf",
+              "id": "c1a5e427-0551-4ea4-94c7-311e1c6175b5",
               "name": "Case 2 - Pass",
               "originalRequest": {
                 "method": "POST",
@@ -5369,7 +5491,7 @@
           },
           "response": [
             {
-              "id": "212d1bf5-1705-448f-bff1-5eb2a4ded316",
+              "id": "625837b4-1d97-4a87-8dd0-a93b17c91bb4",
               "name": "Case 1: Pass",
               "originalRequest": {
                 "method": "POST",
@@ -5442,7 +5564,7 @@
               "body": "{\n  \"errors\": {\n    \"events\": [\n      {\n        \"errors\": [\n          \"Event `id` must be present.  Version 4 UUID is recommended.\"\n        ], \n        \"id\": null, \n        \"index\": 0\n      }\n    ]\n  }\n}\n"
             },
             {
-              "id": "914c8ec1-2317-4b15-be82-1851aa88dd93",
+              "id": "223f4cea-68cb-4272-815e-c2da5c8c14ff",
               "name": "case 3: Failure",
               "originalRequest": {
                 "method": "POST",
@@ -5526,7 +5648,7 @@
               "body": "{\n  \"accepted_events\": [\n    {\n      \"id\": \"bus-stop-3-56\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"70974159180750\"\n      }\n    }\n  ]\n}\n"
             },
             {
-              "id": "0e5a1e59-6065-45af-9d7d-2925fe049482",
+              "id": "e3f29e31-d4fb-40bf-b8eb-a1cbba2bb19f",
               "name": "Case 2: Partial Success",
               "originalRequest": {
                 "method": "POST",
@@ -5687,7 +5809,7 @@
           },
           "response": [
             {
-              "id": "253f49fe-0b6e-4ec8-9c79-247e6845b4ea",
+              "id": "7efdf791-03f0-47fc-bb78-c0c023f056e1",
               "name": "case 3: Failure",
               "originalRequest": {
                 "method": "POST",
@@ -5771,7 +5893,7 @@
               "body": "{\n  \"accepted_events\": [\n    {\n      \"id\": \"bus-stop-3-56\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"70974159180750\"\n      }\n    }\n  ]\n}\n"
             },
             {
-              "id": "395044e4-40b2-425e-b62a-0b0ab36c3358",
+              "id": "e88cd4f4-54c6-4866-9742-2ac38a30948e",
               "name": "Case 2: Partial Success",
               "originalRequest": {
                 "method": "POST",
@@ -5856,7 +5978,7 @@
               "body": "{\n  \"accepted_events\": [\n    {\n      \"id\": \"urn:uuid:bus-stop-3-55\", \n      \"topics\": {\n        \"STREAM-unizin-umich-umich-stream-GoldUMichLectureCapture-dev\": \"66572889239555\"\n      }\n    }\n  ]\n}\n"
             },
             {
-              "id": "d2612f5d-2145-496f-8969-8201fa3e7ef7",
+              "id": "7d9d49eb-93d3-4e4d-854e-b48ac4bacef3",
               "name": "Case 1: Pass",
               "originalRequest": {
                 "method": "POST",
@@ -6006,7 +6128,7 @@
           },
           "response": [
             {
-              "id": "87eb81fc-6e83-4294-8a9e-9976cacb078f",
+              "id": "e789cad0-2539-4803-bb97-77f106589e34",
               "name": "Case 2: Pass",
               "originalRequest": {
                 "method": "POST",
@@ -6079,7 +6201,7 @@
               "body": "{\n  \"errors\": {\n    \"events\": [\n      {\n        \"errors\": [\n          \"Event `type` and `action` must be present, and `action` must be valid for `type`.\"\n        ], \n        \"id\": \"urn:uuid:09b7058c-9844-4519-b110-973f9c6eb0e4\", \n        \"index\": 0\n      }\n    ]\n  }\n}\n"
             },
             {
-              "id": "2a598f17-9cc7-4be2-9f72-dcf3eb626669",
+              "id": "5ad95cd3-edfd-4c9f-80ae-230086ce2c93",
               "name": "Case 1: Pass",
               "originalRequest": {
                 "method": "POST",
@@ -6229,7 +6351,7 @@
           },
           "response": [
             {
-              "id": "65b92962-68dd-4872-8df1-34688be6250d",
+              "id": "c9ce8be4-a38e-4a21-9a4b-8f0312baa81d",
               "name": "Case 2: Pass",
               "originalRequest": {
                 "method": "POST",
@@ -6302,7 +6424,7 @@
               "body": "{\n  \"errors\": {\n    \"events\": [\n      {\n        \"errors\": [\n          \"Event `type` and `action` must be present, and `action` must be valid for `type`.\"\n        ], \n        \"id\": \"urn:uuid:33666490-8802-445b-bf8a-7103a6036fe6\", \n        \"index\": 0\n      }\n    ]\n  }\n}\n"
             },
             {
-              "id": "319c8e0e-a10e-452e-b6b9-e588252e2c5a",
+              "id": "44ba2fd1-705d-44fc-9bc3-b865a9a0ed67",
               "name": "Case 1: Pass",
               "originalRequest": {
                 "method": "POST",
@@ -6463,7 +6585,7 @@
           },
           "response": [
             {
-              "id": "3fdc61a6-7a98-4773-a059-9f3845af42b0",
+              "id": "ab0241db-2027-4082-8b6b-1d9ba3c0d695",
               "name": "Pass",
               "originalRequest": {
                 "method": "POST",
@@ -6657,7 +6779,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "33eb3ac1-f6cb-4d58-bab5-76abcc0966d6",
+                "id": "2e2e3c9a-cd1d-4772-ab69-c7cbbd8c3632",
                 "type": "text/javascript",
                 "exec": [
                   "var resp = pm.response;",
@@ -6680,34 +6802,43 @@
                   "",
                   "// get the column positions",
                   "var bqRes = resp.json();",
-                  "var edAppColPosi;",
-                  "var ucdmCourseOfferingIdColumPosi;",
-                  "var ucdmActorIdColPosi;",
-                  "var bqColumnValues=bqRes.schema.fields;",
-                  "for(i=0;i<bqColumnValues.length;i++){",
-                  "    if(bqColumnValues[i].name ===\"ed_app\"){",
-                  "        edAppColPosi=i;",
+                  "var totRows=bqRes.totalRows;",
+                  "// if 0 rows returned then event is not found in the BQ",
+                  "if(totRows === \"0\"){",
+                  "    pm.test(gtBQCheck, function () {",
+                  "        pm.expect(parseInt(totRows, 10)).gt(0);",
+                  "});",
+                  "// event is anticipated to be found and below test will justify that",
+                  "}else{",
+                  "    var edAppColPosi;",
+                  "    var ucdmCourseOfferingIdColumPosi;",
+                  "    var ucdmActorIdColPosi;",
+                  "    var bqColumnValues=bqRes.schema.fields;",
+                  "    for(i=0;i<bqColumnValues.length;i++){",
+                  "        if(bqColumnValues[i].name ===\"ed_app\"){",
+                  "            edAppColPosi=i;",
+                  "        }",
+                  "        if(bqColumnValues[i].name ===\"ucdm_course_offering_id\"){",
+                  "            ucdmCourseOfferingIdColumPosi=i;",
+                  "        }",
+                  "        if(bqColumnValues[i].name ===\"ucdm_actor_id\"){",
+                  "            ucdmActorIdColPosi=i;",
+                  "        }",
                   "    }",
-                  "    if(bqColumnValues[i].name ===\"ucdm_course_offering_id\"){",
-                  "        ucdmCourseOfferingIdColumPosi=i;",
-                  "    }",
-                  "    if(bqColumnValues[i].name ===\"ucdm_actor_id\"){",
-                  "        ucdmActorIdColPosi=i;",
-                  "    }",
-                  "}",
-                  "",
-                  "var tableRows = bqRes.rows[0];",
-                  "var tableId=tableRows.f[0].v;",
-                  "var edAppValue=tableRows.f[edAppColPosi].v;",
-                  "var ucdmCourseOfferingIdValue=tableRows.f[ucdmCourseOfferingIdColumPosi].v;",
-                  "var ucdmActorIdValue=tableRows.f[ucdmActorIdColPosi].v;",
-                  "",
-                  "pm.test(gtBQCheck, function () {",
-                  "    pm.expect((tableId)).to.equal(bq);",
-                  "    pm.expect((edAppValue)).to.equal(null);",
-                  "    pm.expect((ucdmCourseOfferingIdValue)).to.equal(null);",
-                  "    pm.expect((ucdmActorIdValue)).to.equal(null);",
-                  "});"
+                  "    ",
+                  "    var tableRows = bqRes.rows[0];",
+                  "    var tableId=tableRows.f[0].v;",
+                  "    var edAppValue=tableRows.f[edAppColPosi].v;",
+                  "    var ucdmCourseOfferingIdValue=tableRows.f[ucdmCourseOfferingIdColumPosi].v;",
+                  "    var ucdmActorIdValue=tableRows.f[ucdmActorIdColPosi].v;",
+                  "    //  this is to check the event is found and it is not enriched",
+                  "    pm.test(gtBQCheck, function () {",
+                  "        pm.expect((tableId)).to.equal(bq);",
+                  "        pm.expect((edAppValue)).to.equal(null);",
+                  "        pm.expect((ucdmCourseOfferingIdValue)).to.equal(null);",
+                  "        pm.expect((ucdmActorIdValue)).to.equal(null);",
+                  "    });",
+                  "}"
                 ]
               }
             }
@@ -6855,7 +6986,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "d299c911-5dd5-4bef-9e6b-9545670602da",
+                "id": "29e40556-405d-470e-abd7-334b6f4b7250",
                 "type": "text/javascript",
                 "exec": [
                   "var resp = pm.response;",
@@ -6878,34 +7009,43 @@
                   "",
                   "// get the column positions",
                   "var bqRes = resp.json();",
-                  "var edAppColPosi;",
-                  "var ucdmCourseOfferingIdColumPosi;",
-                  "var ucdmActorIdColPosi;",
-                  "var bqColumnValues=bqRes.schema.fields;",
-                  "for(i=0;i<bqColumnValues.length;i++){",
-                  "    if(bqColumnValues[i].name ===\"ed_app\"){",
-                  "        edAppColPosi=i;",
+                  "var totRows=bqRes.totalRows;",
+                  "// if 0 rows returned then event is not found in the BQ",
+                  "if(totRows === \"0\"){",
+                  "    pm.test(gtBQCheck, function () {",
+                  "        pm.expect(parseInt(totRows, 10)).gt(0);",
+                  "});",
+                  "// event is anticipated to be found and below test will justify that",
+                  "}else{",
+                  "    var edAppColPosi;",
+                  "    var ucdmCourseOfferingIdColumPosi;",
+                  "    var ucdmActorIdColPosi;",
+                  "    var bqColumnValues=bqRes.schema.fields;",
+                  "    for(i=0;i<bqColumnValues.length;i++){",
+                  "        if(bqColumnValues[i].name ===\"ed_app\"){",
+                  "            edAppColPosi=i;",
+                  "        }",
+                  "        if(bqColumnValues[i].name ===\"ucdm_course_offering_id\"){",
+                  "            ucdmCourseOfferingIdColumPosi=i;",
+                  "        }",
+                  "        if(bqColumnValues[i].name ===\"ucdm_actor_id\"){",
+                  "            ucdmActorIdColPosi=i;",
+                  "        }",
                   "    }",
-                  "    if(bqColumnValues[i].name ===\"ucdm_course_offering_id\"){",
-                  "        ucdmCourseOfferingIdColumPosi=i;",
-                  "    }",
-                  "    if(bqColumnValues[i].name ===\"ucdm_actor_id\"){",
-                  "        ucdmActorIdColPosi=i;",
-                  "    }",
-                  "}",
-                  "",
-                  "var tableRows = bqRes.rows[0];",
-                  "var tableId=tableRows.f[0].v;",
-                  "var edAppValue=tableRows.f[edAppColPosi].v;",
-                  "var ucdmCourseOfferingIdValue=tableRows.f[ucdmCourseOfferingIdColumPosi].v;",
-                  "var ucdmActorIdValue=tableRows.f[ucdmActorIdColPosi].v;",
-                  "",
-                  "pm.test(gtBQCheck, function () {",
-                  "    pm.expect((tableId)).to.equal(bq);",
-                  "    pm.expect((edAppValue)).to.equal(null);",
-                  "    pm.expect((ucdmCourseOfferingIdValue)).to.equal(null);",
-                  "    pm.expect((ucdmActorIdValue)).to.equal(null);",
-                  "});"
+                  "    ",
+                  "    var tableRows = bqRes.rows[0];",
+                  "    var tableId=tableRows.f[0].v;",
+                  "    var edAppValue=tableRows.f[edAppColPosi].v;",
+                  "    var ucdmCourseOfferingIdValue=tableRows.f[ucdmCourseOfferingIdColumPosi].v;",
+                  "    var ucdmActorIdValue=tableRows.f[ucdmActorIdColPosi].v;",
+                  "    //  this is to check the event is found and it is not enriched",
+                  "    pm.test(gtBQCheck, function () {",
+                  "        pm.expect((tableId)).to.equal(bq);",
+                  "        pm.expect((edAppValue)).to.equal(null);",
+                  "        pm.expect((ucdmCourseOfferingIdValue)).to.equal(null);",
+                  "        pm.expect((ucdmActorIdValue)).to.equal(null);",
+                  "    });",
+                  "}"
                 ]
               }
             }
@@ -7057,7 +7197,7 @@
           },
           "response": [
             {
-              "id": "31826833-7f0d-44f2-858c-2794aa919711",
+              "id": "5aa93019-1f51-4832-b2c3-801b59ec9885",
               "name": "Ex. 1: SessionEvent, LoggedIn",
               "originalRequest": {
                 "method": "POST",
@@ -7212,7 +7352,7 @@
           },
           "response": [
             {
-              "id": "8aeff45d-4ed1-41e8-a3b7-cd5e6538ab5d",
+              "id": "74e62fc2-35d5-40c0-9cdd-34be74477ab1",
               "name": "Ex. 1: SessionEvent, LoggedIn",
               "originalRequest": {
                 "method": "POST",
@@ -7367,7 +7507,7 @@
           },
           "response": [
             {
-              "id": "23b57237-7daa-4820-b1cc-97e58063c420",
+              "id": "c0478963-bd01-4589-90f0-f86b33acf0a8",
               "name": "Ex. 1: SessionEvent, LoggedIn",
               "originalRequest": {
                 "method": "POST",
