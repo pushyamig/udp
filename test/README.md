@@ -170,7 +170,13 @@ environment variable file:
 5. Grab the `access token` value from above and place it in the environmental variables `gcp_token` in the Postman along with others.
 
 Token generation set up process is a seperate process from running the Postman script and token expire in 1hour so you have to generate the token again. 
-I am trying to figured out a way to tie the service account.json file with postman for making the token generation process automatic so I will keep looking.
+
+## GCP Token generation using Openshift
+I haven't found an obvious way to tie up the service account.json file with postman for making the token generation process
+automatic. There is a process in place you can get the token going to Openshift and following below steps
+1. Go to Openshift project [tl-hacks#gcp-token-generator](https://openshift.dsc.umich.edu:8443/console/project/tl-hacks/browse/pods/gcp-token-generator-6-mqw36?tab=terminal)
+2. In the terminal window type `./token.sh` this will generate a GCP bearer token that can be populated in Postman
+environmental variable `gcp_token`
 
 ## importing Environmental variable file
 Postman provides an easy way to import the enviromental variables that are used by Postman when making the API call. Here the steps to do it
@@ -178,3 +184,22 @@ Postman provides an easy way to import the enviromental variables that are used 
 2. Click on the `import` button on the pop-up window, that will ask to upload a file choose the file the file `udp-ststvii.postman_environment.json`
 3. add `udp_token` and `gcp_token` values
 
+
+## Run the Postman test from Teams Workspace
+All postman tests are based from this [document](https://docs.google.com/spreadsheets/d/1XGj76VRC1t2NH3LeA60U2rHqogqx_CIy1KAL48Cv5NQ/edit#gid=0)
+some of naming convention in postman tests taken as the way they are described from the document.
+
+1. Open the Postman desktop app on your machine, it will defaults to `My Workspace` click on the dropdown next to it and 
+select `Team` UDP (UMich ITS TL) workspace. You may see various postman collection but collection of interest is `udp`
+2. select the Environment `udp_stsvii_env` and grab the gcp taken from openshift as described in above section 
+3. Click on the `Runner` button and that will pop open another window with in postman context and choose 
+    1. `udp` collection, the collection would have multiple folders categorizing a set of test scenarios testing
+    2. select the Enviroment as `udp_stsvii_env` 
+    3. Hit the big blue button that says 'Run udp', this will run all the tests in the collection
+    4. you can just run specific test case as you want by selecting sub folder underneath the main collection
+           1. for example, select `udp` collection and sub collection`Caliper Compliance` and repeat step 2 and 3
+           2. this will run just test cases associated with caliper compliance test.
+4. For debugging purposes, you can have the postman console open for more info in case of error
+    1. Open Postman app, go to `View` => `Show Postman Console`, this will open the console and let the window open while
+    running the test
+5. Errors associated with token expiry can be understood by 401 Not Authorized, as alway start with a fresh token when running the collection
